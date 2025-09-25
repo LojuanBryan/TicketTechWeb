@@ -1,0 +1,64 @@
+﻿@model Chamados
+
+@{
+    ViewData["Title"] = "Editar Chamado";
+}
+
+<div class="container bg-gradient p-5 rounded-5">
+    <div class="mb-5 text-center">
+        <h1>Edição de Chamados</h1>
+    </div>
+
+    <form method="post" asp-controller="Chamados" asp-action="Editar">
+
+        <input type="hidden" asp-for="ChamadoId"/>
+
+        <div class="mb-3">
+            <label asp-for="Titulo" class="form-label"></label>
+            <input asp-for="Titulo" class="form-control" placeholder="Dê um título ao seu chamado" />
+            <span asp-validation-for="Titulo" class="text-danger"></span>
+
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Dispositivo" class="form-label"></label>
+            <input asp-for="Dispositivo" class="form-control" placeholder="Tipo de equipamento utilizado" />
+            <span asp-validation-for="Dispositivo" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Sintomas" class="form-label"></label>
+            <input asp-for="Sintomas" class="form-control" placeholder="Qual erro ou comportamento inesperado ocorreu?" />
+            <span asp-validation-for="Sintomas" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="QuandoOcorreu" class="form-label"></label>
+            <input asp-for="QuandoOcorreu" type="date" class="form-control" />
+            <span asp-validation-for="QuandoOcorreu" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="OndeOcorreu" class="form-label"></label>
+            <input asp-for="OndeOcorreu" class="form-control" placeholder="Local onde a falha foi identificada" />
+            <span asp-validation-for="OndeOcorreu" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="DescricaoDetalhada" class="form-label"></label>
+            <textarea asp-for="DescricaoDetalhada" class="form-control" rows="3" placeholder="O que estava fazendo quando o problema ocorreu?"></textarea>
+            <span asp-validation-for="DescricaoDetalhada" class="text-danger"></span>
+        </div>
+
+        <div class="d-flex gap-3 mt-4">
+            <button type="submit" class="btn btn-primary">Editar</button>
+            <a class="btn btn-secondary" asp-action="Index">Voltar</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

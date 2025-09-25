@@ -1,0 +1,23 @@
+﻿@model Chamados
+
+@{
+    ViewData["Title"] = "Excluir Chamado";
+}
+
+<h2>Excluir Chamado</h2>
+
+<h3>Você tem certeza que deseja excluir este chamado?</h3>
+
+<div>
+    <strong>@Model.Titulo</strong><br />
+    Dispositivo: @Model.Dispositivo <br />
+    Status: @Model.Status <br />
+    Última atualização: @Model.DataUltimaAtualizacao
+</div>
+
+<form asp-action="Excluir" method="post">
+    <input type="hidden" asp-for="ChamadoId" />
+    <button type="submit" class="btn btn-danger">Excluir</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>
+
