@@ -9,6 +9,7 @@ namespace testeTicketTech.Data
         { 
         }
 
-        public DbSet<Chamados> Chamados { get; set; }     
+        public DbSet<Chamados> Chamados { get; set; }
+        public DbSet<UsuarioModel> Usuarios { get; set; } 
     }
 }
