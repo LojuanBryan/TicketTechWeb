@@ -9,6 +9,7 @@
   <ItemGroup>
     <Compile Remove="NovaPasta1\**" />
     <Compile Remove="NovaPasta2\**" />
+    <Compile Remove="NovaPasta\**" />
     <Compile Remove="Views\NovaPasta1\**" />
     <Compile Remove="Views\NovaPasta2\**" />
     <Compile Remove="Views\NovaPasta\**" />
@@ -16,6 +17,7 @@
     <Compile Remove="wwwroot\NovaPasta\**" />
     <Content Remove="NovaPasta1\**" />
     <Content Remove="NovaPasta2\**" />
+    <Content Remove="NovaPasta\**" />
     <Content Remove="Views\NovaPasta1\**" />
     <Content Remove="Views\NovaPasta2\**" />
     <Content Remove="Views\NovaPasta\**" />
@@ -23,6 +25,7 @@
     <Content Remove="wwwroot\NovaPasta\**" />
     <EmbeddedResource Remove="NovaPasta1\**" />
     <EmbeddedResource Remove="NovaPasta2\**" />
+    <EmbeddedResource Remove="NovaPasta\**" />
     <EmbeddedResource Remove="Views\NovaPasta1\**" />
     <EmbeddedResource Remove="Views\NovaPasta2\**" />
     <EmbeddedResource Remove="Views\NovaPasta\**" />
@@ -30,6 +33,7 @@
     <EmbeddedResource Remove="wwwroot\NovaPasta\**" />
     <None Remove="NovaPasta1\**" />
     <None Remove="NovaPasta2\**" />
+    <None Remove="NovaPasta\**" />
     <None Remove="Views\NovaPasta1\**" />
     <None Remove="Views\NovaPasta2\**" />
     <None Remove="Views\NovaPasta\**" />
@@ -39,13 +43,19 @@
 
   <ItemGroup>
     <Compile Remove="Models\Usuario.cs" />
+    <Compile Remove="Views\Usuario\CriarCadastro.cshtml.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Remove="Views\Chamados\Index1.cshtml" />
+    <Content Remove="Views\Usuario\Create - Cópia.cshtml" />
+    <Content Remove="Views\Usuario\CriarCadastro.cshtml" />
+    <Content Remove="Views\Usuario\Index - Cópia %282%29.cshtml" />
+    <Content Remove="Views\Usuario\Index - Cópia.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="ClosedXML" Version="0.105.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.8">
       <PrivateAssets>all</PrivateAssets>
