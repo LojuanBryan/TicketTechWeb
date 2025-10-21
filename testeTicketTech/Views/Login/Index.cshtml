@@ -1,25 +1,36 @@
-﻿@{
+﻿@model LoginModel
+@{
     Layout = "_LayoutDeslogado";
     ViewData["Title"] = "Login";
 }
 
-<form>
+<form asp-controller="Login" asp-action="Entrar" method="post">
 
-    <img src="C:\Users\lojua\OneDrive\Área de Trabalho\AREA DE TRABALHO\Trabalho faculdade\PIM 3 SEMESTRE\IMAGENS\Logo.PNG" alt="Logo TicketTech">
+    <img src="~/imagens/Logo.PNG" alt="Logo TicketTech">
 
     <div class="mb-3">
-        <label for="exampleInputEmail1" class="form-label"></label>
-        <input type="email" class="form-control" id="Email" placeholder="E-mail">
+        <input type="text" asp-for="Login" class="form-control" placeholder="Login">
+        <span class="text-danger">@Html.ValidationMessageFor(x => x.Login)</span>
     </div>
 
     <div class="mb-3">
-        <label for="senha" class="form-label"></label>
-        <input type="password" class="form-control" id="senha" placeholder="Senha">
+        <input type="password" asp-for="Senha" class="form-control" placeholder="Senha">
+        <span class="text-danger">@Html.ValidationMessageFor(x => x.Senha)</span>
     </div>
+
     <div class="mb-3 form-check">
-        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-        <label class="form-check-label" for="exampleCheck1">Declaro que li e concordo com os Termos de Uso e Política de Privacidade geridas pela <a href="https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm">LGPD</a>.</label>
+        <input asp-for="ConcordaLGPD" class="form-check-input" type="checkbox" />
+        <label class="form-check-label" asp-for="ConcordaLGPD">
+            Declaro que li e concordo com os Termos de Uso e Política de Privacidade geridas pela
+            <a href="https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm" target="_blank">LGPD</a>.
+        </label>
+        <span class="text-danger">@Html.ValidationMessageFor(x => x.ConcordaLGPD)</span>
     </div>
+
 
     <button type="submit" class="btn btn-primary">Entrar</button>
 </form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
