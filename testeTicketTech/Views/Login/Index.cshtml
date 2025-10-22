@@ -11,10 +11,10 @@
     </div>
 }
 
+<h1 class="text-center display-4 mb-4">Ticket Tech</h1>
+
 
 <form asp-controller="Login" asp-action="Entrar" method="post">
-
-    <img src="~/imagens/Logo.PNG" alt="Logo TicketTech">
 
     @if (TempData["MensagemErro"] != null)
     {
@@ -43,8 +43,9 @@
         <span class="text-danger">@Html.ValidationMessageFor(x => x.ConcordaLGPD)</span>
     </div>
 
-
-    <button type="submit" class="btn btn-primary">Entrar</button>
+    <div class="d-grid gap-2 col-12 mx-auto">
+        <button type="submit" class="btn btn-primary btn-lg">Entrar</button>
+    </div>
 
     <p>Não tem conta? <a asp-controller="Cadastro" asp-action="Index">Cadastre-se aqui</a></p>
 

@@ -1,16 +1,19 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using testeTicketTech.Data;
-using testeTicketTech.Models;
+﻿using ClosedXML.Excel;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.SqlServer.Query.Internal;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using Microsoft.EntityFrameworkCore.SqlServer.Query.Internal;
 using System.Data;
-using ClosedXML.Excel;
+using System.Linq;
+using testeTicketTech.Data;
+using testeTicketTech.Filters;
+using testeTicketTech.Models;
 
 namespace testeTicketTech.Controllers
 {
-    
+    [PaginaParaUsuarioLogado]
+
+
     public class ChamadosController : Controller
     {
         private readonly ApplicationDbContext _db;

@@ -1,9 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using testeTicketTech.Data;
+using testeTicketTech.Filters;
 using testeTicketTech.Models;
 
 namespace testeTicketTech.Controllers
 {
+    [PaginaRestritaSomenteAdmin]
+
     public class UsuarioController : Controller
     {
         private readonly ApplicationDbContext _db;

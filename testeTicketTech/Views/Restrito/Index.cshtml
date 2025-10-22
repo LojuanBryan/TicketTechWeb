@@ -1,0 +1,18 @@
+﻿@{
+    ViewData["Title"] = "Acesso Negado";
+}
+
+<div class="container mt-5 text-center">
+    <h2 class="text-danger">Acesso Negado</h2>
+    <p class="lead">Esta área é restrita a administradores.</p>
+
+    @if (TempData["MensagemErro"] != null)
+    {
+        <div class="alert alert-danger mt-3">
+            @TempData["MensagemErro"]
+        </div>
+    }
+
+    <a asp-controller="Home" asp-action="Index" class="btn btn-primary mt-3">Voltar para a Home</a>
+</div>
+

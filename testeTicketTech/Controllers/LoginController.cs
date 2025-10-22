@@ -61,10 +61,6 @@ namespace testeTicketTech.Controllers
 
                 _sessao.CriarSessaoDoUsuario(usuario);
 
-                // Aqui você pode salvar o usuário na sessão, se quiser
-                TempData["MensagemSucesso"] = $"Bem-vindo, {usuario.Nome}!";
-
-
                 return RedirectToAction("Index", "Home");
             }
             catch (Exception erro)

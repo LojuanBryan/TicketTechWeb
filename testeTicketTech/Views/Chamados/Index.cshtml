@@ -1,21 +1,32 @@
 ﻿@model IEnumerable<Chamados>
+@using Newtonsoft.Json
+@using testeTicketTech.Models
+@using testeTicketTech.Enums
+
+@{
+    var sessaoUsuario = Context.Session.GetString("sessaoUsuarioLogado");
+    UsuarioModel usuarioLogado = !string.IsNullOrEmpty(sessaoUsuario)
+        ? JsonConvert.DeserializeObject<UsuarioModel>(sessaoUsuario)
+        : null;
+}
 
 <div class="container mt-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1 class="mb-0">Chamados</h1>
         <div class="d-flex">
-            <a href="#" class="btn btn-success me-2">Exportar</a>
+            @* Só mostra o botão Exportar se o usuário for Admin *@
+            @if (usuarioLogado != null && usuarioLogado.Perfil == PerfilEnum.Admin)
+            {
+                <a asp-action="ExportarExcel" class="btn btn-success me-2">
+                    <i class="bi bi-file-earmark-excel mx-1"></i> Exportar
+                </a>
+            }
+
             <a asp-action="Cadastrar" class="btn btn-primary">Novo Chamado</a>
         </div>
     </div>
 
-    <!-- Aqui vem a tabela -->
-</div>
-       
-    
-
-    <!-- Faz com que apareça a mensagem de sucesso de na ação -->
-    @if(TempData["MensagemSucesso"]!= null)
+    @if (TempData["MensagemSucesso"] != null)
     {
         <div class="alert alert-success text-light" role="alert">
             @TempData["MensagemSucesso"]
@@ -24,7 +35,7 @@
 
     @if (TempData["MensagemErro"] != null)
     {
-        <div class="alert alert-success text-light" role="alert">
+        <div class="alert alert-danger text-light" role="alert">
             @TempData["MensagemErro"]
         </div>
     }
@@ -44,9 +55,9 @@
             </tr>
         </thead>
         <tbody>
-            @if(Model != null && Model.Any())
+            @if (Model != null && Model.Any())
             {
-                @foreach(var chamado in Model)
+                @foreach (var chamado in Model)
                 {
                     <tr>
                         <td>@chamado.ChamadoId</td>
@@ -59,7 +70,7 @@
                         <td>@chamado.OndeOcorreu</td>
                         <td>
                             <a asp-controller="Chamados" asp-action="Editar" asp-route-id="@chamado.ChamadoId" class="btn btn-primary mx-2">Editar</a>
-                            <a asp-controller="Chamados" asp-action="Excluir" asp-route-id="@chamado.ChamadoId" class="btn mx-2">Excluir</a>
+                            <a asp-controller="Chamados" asp-action="Excluir" asp-route-id="@chamado.ChamadoId" class="btn btn-danger mx-2">Excluir</a>
                         </td>
                     </tr>
                 }
@@ -67,7 +78,7 @@
             else
             {
                 <tr>
-                    <td colspan="8" class="text-center">Nenhum chamado encontrado.</td>
+                    <td colspan="9" class="text-center">Nenhum chamado encontrado.</td>
                 </tr>
             }
         </tbody>

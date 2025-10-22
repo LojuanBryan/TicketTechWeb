@@ -1,9 +1,12 @@
-﻿using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
+using testeTicketTech.Filters;
 using testeTicketTech.Models;
 
 namespace testeTicketTech.Controllers
 {
+    [PaginaParaUsuarioLogado]
+
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
