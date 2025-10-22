@@ -11,7 +11,6 @@ using testeTicketTech.Models;
 
 namespace testeTicketTech.Controllers
 {
-    [PaginaParaUsuarioLogado]
 
 
     public class ChamadosController : Controller

@@ -1,0 +1,167 @@
+﻿@{
+    ViewData["Title"] = "Chat IA";
+}
+
+<link rel="stylesheet" href="~/css/chat.css" />
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="chat-container">
+                <div class="chat-header">
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-robot me-2 fs-4"></i>
+                        <div>
+                            <h5 class="mb-0">Assistente IA - Llama 3.2</h5>
+                            <small class="text-muted">Online</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chat-messages" id="chatMessages">
+                    <div class="message-item bot-message">
+                        <div class="message-avatar">
+                            <i class="bi bi-robot"></i>
+                        </div>
+                        <div class="message-content">
+                            <p>Olá! Sou seu assistente IA. Como posso ajudar você hoje?</p>
+                            <span class="message-time">Agora</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chat-input-container">
+                    <form id="chatForm" class="d-flex gap-2">
+                        <input type="text"
+                               id="messageInput"
+                               class="form-control"
+                               placeholder="Digite sua mensagem..."
+                               autocomplete="off"
+                               required />
+                        <button type="submit" class="btn btn-primary" id="sendButton">
+                            <i class="bi bi-send-fill"></i>
+                        </button>
+                    </form>
+                    <div id="loadingIndicator" class="text-muted mt-2" style="display: none;">
+                        <small><i class="bi bi-hourglass-split"></i> IA está digitando...</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            const chatMessages = $('#chatMessages');
+            const messageInput = $('#messageInput');
+            const chatForm = $('#chatForm');
+            const sendButton = $('#sendButton');
+            const loadingIndicator = $('#loadingIndicator');
+
+            function addUserMessage(message) {
+                const time = new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+                const messageHtml = `
+                    <div class="message-item user-message">
+                        <div class="message-content">
+                            <p>${escapeHtml(message)}</p>
+                            <span class="message-time">${time}</span>
+                        </div>
+                        <div class="message-avatar">
+                            <i class="bi bi-person-fill"></i>
+                        </div>
+                    </div>
+                `;
+                chatMessages.append(messageHtml);
+                scrollToBottom();
+            }
+
+            function addBotMessage(message) {
+                const time = new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+                const messageHtml = `
+                    <div class="message-item bot-message">
+                        <div class="message-avatar">
+                            <i class="bi bi-robot"></i>
+                        </div>
+                        <div class="message-content">
+                            <p>${escapeHtml(message)}</p>
+                            <span class="message-time">${time}</span>
+                        </div>
+                    </div>
+                `;
+                chatMessages.append(messageHtml);
+                scrollToBottom();
+            }
+
+            function addErrorMessage(message) {
+                const messageHtml = `
+                    <div class="message-item bot-message">
+                        <div class="message-avatar">
+                            <i class="bi bi-exclamation-triangle-fill text-danger"></i>
+                        </div>
+                        <div class="message-content">
+                            <p class="text-danger">${escapeHtml(message)}</p>
+                        </div>
+                    </div>
+                `;
+                chatMessages.append(messageHtml);
+                scrollToBottom();
+            }
+
+            function escapeHtml(text) {
+                const div = document.createElement('div');
+                div.textContent = text;
+                return div.innerHTML;
+            }
+
+            function scrollToBottom() {
+                chatMessages.scrollTop(chatMessages[0].scrollHeight);
+            }
+
+            chatForm.on('submit', async function (e) {
+                e.preventDefault();
+
+                const message = messageInput.val().trim();
+                if (!message) return;
+
+                addUserMessage(message);
+                messageInput.val('');
+
+                messageInput.prop('disabled', true);
+                sendButton.prop('disabled', true);
+                loadingIndicator.show();
+
+                try {
+                    const response = await $.ajax({
+                        url: '/Chat/SendMessage',
+                        type: 'POST',
+                        contentType: 'application/json',
+                        data: JSON.stringify({ message: message })
+                    });
+
+                    addBotMessage(response.response);
+
+                } catch (error) {
+                    console.error('Erro:', error);
+                    let errorMessage = 'Erro ao se comunicar com a IA.';
+
+                    if (error.responseJSON && error.responseJSON.error) {
+                        errorMessage = error.responseJSON.error;
+                    } else if (error.status === 0) {
+                        errorMessage = 'Não foi possível conectar ao servidor.';
+                    }
+
+                    addErrorMessage(errorMessage);
+                } finally {
+                    messageInput.prop('disabled', false);
+                    sendButton.prop('disabled', false);
+                    loadingIndicator.hide();
+                    messageInput.focus();
+                }
+            });
+
+            messageInput.focus();
+        });
+    </script>
+}
