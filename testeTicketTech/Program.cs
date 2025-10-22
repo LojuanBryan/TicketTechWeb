@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using testeTicketTech.Data;
+using testeTicketTech.Helper;
 
 namespace testeTicketTech
 {
@@ -11,6 +12,15 @@ namespace testeTicketTech
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            builder.Services.AddHttpContextAccessor();
+            builder.Services.AddSingleton<ISessao, Sessao>();
+            builder.Services.AddSession(options =>
+            {
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+
 
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
             {
@@ -31,6 +41,8 @@ namespace testeTicketTech
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseSession();
 
             app.UseAuthorization();
 

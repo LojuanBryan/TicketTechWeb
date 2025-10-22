@@ -1,0 +1,64 @@
+﻿@model testeTicketTech.Models.UsuarioModel?
+
+<a class="navbar-brand text-light" asp-controller="Home" asp-action="Index">
+    @if (Model != null)
+    {
+        <text>Olá, @Model.Nome</text>
+    }
+    else
+    {
+        <text>TicketTech</text>
+    }
+</a>
+
+<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+</button>
+
+<div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+    <ul class="navbar-nav flex-grow-1">
+        @if (Model != null)
+        {
+            <li class="nav-item">
+                <a class="nav-link text-light" asp-controller="Home" asp-action="Index">
+                    <i class="bi bi-house-fill mx-2"></i>Home
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-light" asp-controller="Chamados" asp-action="Index">
+                    <i class="bi bi-journal-bookmark-fill mx-2"></i>Chamados
+                </a>
+            </li>
+
+            @* Só mostra a aba Usuários se o perfil for Admin *@
+            @if (Model.Perfil == testeTicketTech.Enums.PerfilEnum.Admin)
+            {
+                <li class="nav-item">
+                    <a class="nav-link text-light" asp-controller="Usuario" asp-action="Index">
+                        <i class="bi bi-people mx-2"></i>Usuários
+                    </a>
+                </li>
+            }
+
+            <li class="nav-item">
+                <a class="nav-link text-light" asp-controller="Login" asp-action="Sair">
+                    <i class="bi bi-box-arrow-right mx-2"></i>Sair
+                </a>
+            </li>
+        }
+        else
+        {
+            <li class="nav-item">
+                <a class="nav-link text-light" asp-controller="Login" asp-action="Index">
+                    <i class="bi bi-box-arrow-in-right mx-2"></i>Login
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-light" asp-controller="Cadastro" asp-action="Index">
+                    <i class="bi bi-person-plus mx-2"></i>Cadastro
+                </a>
+            </li>
+        }
+    </ul>
+</div>

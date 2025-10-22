@@ -4,6 +4,14 @@
     ViewData["Title"] = "Login";
 }
 
+@if (TempData["MensagemSucesso"] != null)
+{
+    <div class="alert alert-success text-light" role="alert">
+        @TempData["MensagemSucesso"]
+    </div>
+}
+
+
 <form asp-controller="Login" asp-action="Entrar" method="post">
 
     <img src="~/imagens/Logo.PNG" alt="Logo TicketTech">
@@ -37,7 +45,11 @@
 
 
     <button type="submit" class="btn btn-primary">Entrar</button>
+
+    <p>Não tem conta? <a asp-controller="Cadastro" asp-action="Index">Cadastre-se aqui</a></p>
+
 </form>
+
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

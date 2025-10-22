@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using testeTicketTech.Data;
+using testeTicketTech.Helper;
 using testeTicketTech.Models;
 
 namespace testeTicketTech.Controllers
@@ -7,15 +8,29 @@ namespace testeTicketTech.Controllers
     public class LoginController : Controller
     {
         private readonly ApplicationDbContext _db;
+        private readonly ISessao _sessao;
 
-        public LoginController(ApplicationDbContext db)
+        public LoginController(ApplicationDbContext db, ISessao sessao)
         {
             _db = db;
+            _sessao = sessao;
         }
 
         public IActionResult Index()
         {
+            //Se o usuario estiver logado, redirecionar para a home
+
+            if (_sessao.BuscarSessaoDoUsuario() != null) return RedirectToAction("Index", "Home");
+
             return View();
+        }
+
+        //Método para deslogar
+
+        public IActionResult Sair()
+        {
+            _sessao.RemoverSessaoDoUsuario();
+            return RedirectToAction("Index", "Login");
         }
 
         [HttpPost]
@@ -44,8 +59,12 @@ namespace testeTicketTech.Controllers
                     return View("Index", loginModel);
                 }
 
+                _sessao.CriarSessaoDoUsuario(usuario);
+
                 // Aqui você pode salvar o usuário na sessão, se quiser
                 TempData["MensagemSucesso"] = $"Bem-vindo, {usuario.Nome}!";
+
+
                 return RedirectToAction("Index", "Home");
             }
             catch (Exception erro)
