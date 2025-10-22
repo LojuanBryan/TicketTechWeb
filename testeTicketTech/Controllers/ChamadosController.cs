@@ -10,7 +10,7 @@ using ClosedXML.Excel;
 
 namespace testeTicketTech.Controllers
 {
-    
+
     public class ChamadosController : Controller
     {
         private readonly ApplicationDbContext _db;

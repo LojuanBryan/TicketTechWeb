@@ -1,76 +1,70 @@
 ﻿@model IEnumerable<Chamados>
-
 <div class="container mt-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1 class="mb-0">Chamados</h1>
         <div class="d-flex">
-            <a href="#" class="btn btn-success me-2">Exportar</a>
+            <a asp-action="Exportar" class="btn btn-success me-2">Exportar</a>
             <a asp-action="Cadastrar" class="btn btn-primary">Novo Chamado</a>
         </div>
     </div>
-
     <!-- Aqui vem a tabela -->
 </div>
-       
-    
 
-    <!-- Faz com que apareça a mensagem de sucesso de na ação -->
-    @if(TempData["MensagemSucesso"]!= null)
-    {
-        <div class="alert alert-success text-light" role="alert">
-            @TempData["MensagemSucesso"]
-        </div>
-    }
 
-    @if (TempData["MensagemErro"] != null)
-    {
-        <div class="alert alert-success text-light" role="alert">
-            @TempData["MensagemErro"]
-        </div>
-    }
-
-    <table id="minhaTabela" class="table table-hover">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Título</th>
-                <th>Status</th>
-                <th>Última Atualização</th>
-                <th>Dispositivo</th>
-                <th>Sintomas</th>
-                <th>Quando</th>
-                <th>Onde</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @if(Model != null && Model.Any())
-            {
-                @foreach(var chamado in Model)
-                {
-                    <tr>
-                        <td>@chamado.ChamadoId</td>
-                        <td>@chamado.Titulo</td>
-                        <td>@chamado.Status</td>
-                        <td>@chamado.DataUltimaAtualizacao.ToString("g")</td>
-                        <td>@chamado.Dispositivo</td>
-                        <td>@chamado.Sintomas</td>
-                        <td>@chamado.QuandoOcorreu.ToShortDateString()</td>
-                        <td>@chamado.OndeOcorreu</td>
-                        <td>
-                            <a asp-controller="Chamados" asp-action="Editar" asp-route-id="@chamado.ChamadoId" class="btn btn-primary mx-2">Editar</a>
-                            <a asp-controller="Chamados" asp-action="Excluir" asp-route-id="@chamado.ChamadoId" class="btn mx-2">Excluir</a>
-                        </td>
-                    </tr>
-                }
-            }
-            else
+<!-- Faz com que apareça a mensagem de sucesso de na ação -->
+@if (TempData["MensagemSucesso"] != null)
+{
+    <div class="alert alert-success text-light" role="alert">
+        @TempData["MensagemSucesso"]
+    </div>
+}
+@if (TempData["MensagemErro"] != null)
+{
+    <div class="alert alert-success text-light" role="alert">
+        @TempData["MensagemErro"]
+    </div>
+}
+<table id="minhaTabela" class="table table-hover">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Título</th>
+            <th>Status</th>
+            <th>Última Atualização</th>
+            <th>Dispositivo</th>
+            <th>Sintomas</th>
+            <th>Quando</th>
+            <th>Onde</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Any())
+        {
+            @foreach (var chamado in Model)
             {
                 <tr>
-                    <td colspan="8" class="text-center">Nenhum chamado encontrado.</td>
+                    <td>@chamado.ChamadoId</td>
+                    <td>@chamado.Titulo</td>
+                    <td>@chamado.Status</td>
+                    <td>@chamado.DataUltimaAtualizacao.ToString("g")</td>
+                    <td>@chamado.Dispositivo</td>
+                    <td>@chamado.Sintomas</td>
+                    <td>@chamado.QuandoOcorreu.ToShortDateString()</td>
+                    <td>@chamado.OndeOcorreu</td>
+                    <td>
+                        <a asp-controller="Chamados" asp-action="Editar" asp-route-id="@chamado.ChamadoId" class="btn btn-primary mx-2">Editar</a>
+                        <a asp-controller="Chamados" asp-action="Excluir" asp-route-id="@chamado.ChamadoId" class="btn mx-2">Excluir</a>
+                    </td>
                 </tr>
             }
-        </tbody>
-    </table>
+        }
+        else
+        {
+            <tr>
+                <td colspan="8" class="text-center">Nenhum chamado encontrado.</td>
+            </tr>
+        }
+    </tbody>
+</table>
 </div>
-
