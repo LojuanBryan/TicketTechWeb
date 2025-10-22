@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using testeTicketTech.Data;
 using testeTicketTech.Helper;
+
 namespace testeTicketTech
 {
     public class Program
@@ -12,14 +13,16 @@ namespace testeTicketTech
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
-            builder.Services.AddHttpContextAccessor();
-            builder.Services.AddSingleton<ISessao, Sessao>();
+            // Necessário para usar Session
+            builder.Services.AddDistributedMemoryCache();
             builder.Services.AddSession(options =>
             {
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
             });
 
+            builder.Services.AddHttpContextAccessor();
+            builder.Services.AddSingleton<ISessao, Sessao>();
 
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
             {
@@ -41,7 +44,10 @@ namespace testeTicketTech
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
-            app.UseSession()
+
+            // Habilita Session: deve ficar entre UseRouting() e UseAuthorization()
+            app.UseSession();
+
             app.UseAuthorization();
 
             app.MapControllerRoute(
