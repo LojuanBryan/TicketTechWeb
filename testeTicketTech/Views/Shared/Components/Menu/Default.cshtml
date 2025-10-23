@@ -31,6 +31,13 @@
                 </a>
             </li>
 
+            @* NOVO: Link para Chat IA *@
+            <li class="nav-item">
+                <a class="nav-link text-light" asp-controller="Chat" asp-action="Index">
+                    <i class="bi bi-robot mx-2"></i>Chat IA
+                </a>
+            </li>
+
             @* Só mostra a aba Usuários se o perfil for Admin *@
             @if (Model.Perfil == testeTicketTech.Enums.PerfilEnum.Admin)
             {
