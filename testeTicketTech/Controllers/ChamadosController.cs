@@ -22,7 +22,7 @@ namespace testeTicketTech.Controllers
         {
             _db = db;
         }
-
+        // Botão de exportar para Excel
         public IActionResult Exportar()
         {
             // Chama o método que retorna os dados (precisa retornar um DataTable)
