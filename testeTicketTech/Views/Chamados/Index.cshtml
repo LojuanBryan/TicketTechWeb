@@ -17,7 +17,7 @@
             @* Só mostra o botão Exportar se o usuário for Admin *@
             @if (usuarioLogado != null && usuarioLogado.Perfil == PerfilEnum.Admin)
             {
-                <a asp-action="ExportarExcel" class="btn btn-success me-2">
+                <a asp-action="Exportar" class="btn btn-success me-2">
                     <i class="bi bi-file-earmark-excel mx-1"></i> Exportar
                 </a>
             }
@@ -51,7 +51,7 @@
                 <th>Sintomas</th>
                 <th>Quando</th>
                 <th>Onde</th>
-                <th></th>
+                <th>Ações</th>
             </tr>
         </thead>
         <tbody>
@@ -62,15 +62,48 @@
                     <tr>
                         <td>@chamado.ChamadoId</td>
                         <td>@chamado.Titulo</td>
-                        <td>@chamado.Status</td>
-                        <td>@chamado.DataUltimaAtualizacao.ToString("g")</td>
+                        <td>
+                            @if (chamado.Status == "Aberto")
+                            {
+                                <span class="badge bg-warning text-dark">@chamado.Status</span>
+                            }
+                            else if (chamado.Status == "Resolvido")
+                            {
+                                <span class="badge bg-success">@chamado.Status</span>
+                            }
+                            else if (chamado.Status == "Em Andamento")
+                            {
+                                <span class="badge bg-info">@chamado.Status</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary">@chamado.Status</span>
+                            }
+                        </td>
+                        <td>@chamado.DataUltimaAtualizacao.ToString("dd/MM/yyyy HH:mm")</td>
                         <td>@chamado.Dispositivo</td>
                         <td>@chamado.Sintomas</td>
                         <td>@chamado.QuandoOcorreu.ToShortDateString()</td>
                         <td>@chamado.OndeOcorreu</td>
                         <td>
-                            <a asp-controller="Chamados" asp-action="Editar" asp-route-id="@chamado.ChamadoId" class="btn btn-primary mx-2">Editar</a>
-                            <a asp-controller="Chamados" asp-action="Excluir" asp-route-id="@chamado.ChamadoId" class="btn btn-danger mx-2">Excluir</a>
+                            <a asp-controller="Chamados"
+                               asp-action="Visualizar"
+                               asp-route-id="@chamado.ChamadoId"
+                               class="btn btn-info btn-sm mx-1">
+                                <i class="bi bi-eye"></i> Ver
+                            </a>
+                            <a asp-controller="Chamados"
+                               asp-action="Editar"
+                               asp-route-id="@chamado.ChamadoId"
+                               class="btn btn-primary btn-sm mx-1">
+                                Editar
+                            </a>
+                            <a asp-controller="Chamados"
+                               asp-action="Excluir"
+                               asp-route-id="@chamado.ChamadoId"
+                               class="btn btn-danger btn-sm mx-1">
+                                Excluir
+                            </a>
                         </td>
                     </tr>
                 }

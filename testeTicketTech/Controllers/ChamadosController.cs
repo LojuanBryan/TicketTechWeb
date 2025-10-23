@@ -81,7 +81,20 @@ namespace testeTicketTech.Controllers
         }
 
 
+        // Exibe os detalhes completos do chamado
+        [HttpGet]
+        public IActionResult Visualizar(int? id)
+        {
+            if (id == null || id == 0)
+                return NotFound();
 
+            var chamado = _db.Chamados.FirstOrDefault(x => x.ChamadoId == id);
+
+            if (chamado == null)
+                return NotFound();
+
+            return View(chamado);
+        }
 
 
         // Exibe a lista de todos os chamados

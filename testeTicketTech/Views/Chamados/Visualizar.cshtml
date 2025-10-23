@@ -1,0 +1,125 @@
+﻿@model Chamados
+
+@{
+    ViewData["Title"] = "Detalhes do Chamado";
+}
+
+<div class="container mt-4">
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+            <h3 class="mb-0">
+                <i class="bi bi-ticket-detailed me-2"></i>
+                Chamado #@Model.ChamadoId - @Model.Titulo
+            </h3>
+        </div>
+        <div class="card-body">
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label class="fw-bold text-muted">ID do Chamado:</label>
+                        <p class="fs-5">#@Model.ChamadoId</p>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="fw-bold text-muted">Dispositivo:</label>
+                        <p class="fs-5">
+                            <i class="bi bi-laptop me-2"></i>
+                            @Model.Dispositivo
+                        </p>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="fw-bold text-muted">Status:</label>
+                        <p>
+                            @if (Model.Status == "Aberto")
+                            {
+                                <span class="badge bg-warning text-dark fs-6">
+                                    <i class="bi bi-clock-history me-1"></i>@Model.Status
+                                </span>
+                            }
+                            else if (Model.Status == "Em Andamento")
+                            {
+                                <span class="badge bg-info fs-6">
+                                    <i class="bi bi-hourglass-split me-1"></i>@Model.Status
+                                </span>
+                            }
+                            else if (Model.Status == "Resolvido")
+                            {
+                                <span class="badge bg-success fs-6">
+                                    <i class="bi bi-check-circle me-1"></i>@Model.Status
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary fs-6">@Model.Status</span>
+                            }
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label class="fw-bold text-muted">ID do Usuário:</label>
+                        <p class="fs-5">@Model.UsuarioId</p>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="fw-bold text-muted">Quando Ocorreu:</label>
+                        <p class="fs-5">
+                            <i class="bi bi-calendar-event me-2"></i>
+                            @Model.QuandoOcorreu.ToString("dd/MM/yyyy")
+                        </p>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="fw-bold text-muted">Última Atualização:</label>
+                        <p class="fs-5">
+                            <i class="bi bi-clock me-2"></i>
+                            @Model.DataUltimaAtualizacao.ToString("dd/MM/yyyy HH:mm")
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <hr />
+
+            <div class="mb-4">
+                <label class="fw-bold text-muted fs-5">
+                    <i class="bi bi-geo-alt me-2"></i>Onde Ocorreu:
+                </label>
+                <p class="fs-5 ms-4">@Model.OndeOcorreu</p>
+            </div>
+
+            <div class="mb-4">
+                <label class="fw-bold text-muted fs-5">
+                    <i class="bi bi-exclamation-triangle me-2"></i>Sintomas:
+                </label>
+                <div class="alert alert-warning ms-4">
+                    <p class="mb-0">@Model.Sintomas</p>
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <label class="fw-bold text-muted fs-5">
+                    <i class="bi bi-file-text me-2"></i>Descrição Detalhada:
+                </label>
+                <div class="card bg-light ms-4">
+                    <div class="card-body">
+                        <p class="mb-0" style="white-space: pre-wrap;">@Model.DescricaoDetalhada</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-footer bg-light">
+            <div class="d-flex gap-2">
+                <a asp-action="Editar" asp-route-id="@Model.ChamadoId" class="btn btn-primary">
+                    <i class="bi bi-pencil me-1"></i>Editar
+                </a>
+                <a asp-action="Index" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left me-1"></i>Voltar
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

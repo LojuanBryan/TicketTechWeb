@@ -1,10 +1,338 @@
-﻿@{
-    ViewData["Title"] = "Ticket Tech";
-}
-
+﻿@using testeTicketTech.Enums
 @{
-    Layout = "_Layout";
+    ViewData["Title"] = "Dashboard - Ticket Tech";
+    var usuarioLogado = ViewBag.UsuarioLogado as testeTicketTech.Models.UsuarioModel;
+    var ultimosChamados = ViewBag.UltimosChamados as List<testeTicketTech.Models.Chamados>;
 }
 
-<h1>Bem vindo!</h1>
+<div class="container-fluid">
+    <!-- Cabeçalho com Boas-vindas -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card bg-gradient-primary text-white shadow">
+                <div class="card-body p-4">
+                    <h1 class="display-4 mb-2">
+                        <i class="bi bi-speedometer2 me-3"></i>Bem-vindo, @usuarioLogado.Nome!
+                    </h1>
+                    <p class="lead mb-0">
+                        @if (usuarioLogado.Perfil == PerfilEnum.Admin)
+                        {
+                            <span><i class="bi bi-shield-check me-2"></i>Painel Administrativo</span>
+                        }
+                        else
+                        {
+                            <span><i class="bi bi-person-circle me-2"></i>Central de Chamados</span>
+                        }
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <!-- Cards de Estatísticas -->
+    <div class="row mb-4">
+        <!-- Card: Total de Chamados -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                Total de Chamados
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@ViewBag.TotalChamados</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="bi bi-ticket-detailed fs-2 text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card: Chamados Abertos -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-warning shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                Chamados Abertos
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@ViewBag.ChamadosAbertos</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="bi bi-clock-history fs-2 text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card: Em Andamento -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-info shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                Em Andamento
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@ViewBag.ChamadosEmAndamento</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="bi bi-hourglass-split fs-2 text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card: Resolvidos -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                Resolvidos
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@ViewBag.ChamadosResolvidos</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="bi bi-check-circle fs-2 text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Segunda linha de cards (específicos do usuário) -->
+    <div class="row mb-4">
+        <!-- Card: Meus Chamados -->
+        <div class="col-xl-6 col-md-6 mb-4">
+            <div class="card border-left-secondary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-secondary text-uppercase mb-1">
+                                Meus Chamados
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@ViewBag.MeusChamados</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="bi bi-person-badge fs-2 text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card: Meus Chamados Abertos -->
+        <div class="col-xl-6 col-md-6 mb-4">
+            <div class="card border-left-danger shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
+                                Meus Chamados Abertos
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@ViewBag.MeusChamadosAbertos</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="bi bi-exclamation-triangle fs-2 text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Card Admin: Total de Usuários (só para Admin) -->
+    @if (usuarioLogado.Perfil == PerfilEnum.Admin)
+    {
+        <div class="row mb-4">
+            <div class="col-xl-12 col-md-12 mb-4">
+                <div class="card border-left-dark shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-dark text-uppercase mb-1">
+                                    Total de Usuários Cadastrados
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">@ViewBag.TotalUsuarios</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="bi bi-people fs-2 text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    <!-- Últimos Chamados -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                    <h6 class="m-0 font-weight-bold text-primary">
+                        <i class="bi bi-clock-history me-2"></i>Últimos Chamados
+                    </h6>
+                    <a asp-controller="Chamados" asp-action="Index" class="btn btn-sm btn-primary">
+                        Ver Todos
+                    </a>
+                </div>
+                <div class="card-body">
+                    @if (ultimosChamados != null && ultimosChamados.Any())
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Título</th>
+                                        <th>Status</th>
+                                        <th>Dispositivo</th>
+                                        <th>Última Atualização</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var chamado in ultimosChamados)
+                                    {
+                                        <tr>
+                                            <td>#@chamado.ChamadoId</td>
+                                            <td>@chamado.Titulo</td>
+                                            <td>
+                                                @if (chamado.Status == "Aberto")
+                                                {
+                                                    <span class="badge bg-warning text-dark">@chamado.Status</span>
+                                                }
+                                                else if (chamado.Status == "Resolvido")
+                                                {
+                                                    <span class="badge bg-success">@chamado.Status</span>
+                                                }
+                                                else if (chamado.Status == "Em Andamento")
+                                                {
+                                                    <span class="badge bg-info">@chamado.Status</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge bg-secondary">@chamado.Status</span>
+                                                }
+                                            </td>
+                                            <td>@chamado.Dispositivo</td>
+                                            <td>@chamado.DataUltimaAtualizacao.ToString("dd/MM/yyyy HH:mm")</td>
+                                            <td>
+                                                <a asp-controller="Chamados" asp-action="Visualizar" asp-route-id="@chamado.ChamadoId"
+                                                   class="btn btn-sm btn-info">
+                                                    <i class="bi bi-eye"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="text-center py-4">
+                            <i class="bi bi-inbox fs-1 text-muted"></i>
+                            <p class="text-muted mt-2">Nenhum chamado encontrado</p>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ações Rápidas -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card shadow">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">
+                        <i class="bi bi-lightning-charge me-2"></i>Ações Rápidas
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <div class="row text-center">
+                        <div class="col-md-3 mb-3">
+                            <a asp-controller="Chamados" asp-action="Cadastrar" class="btn btn-lg btn-primary w-100">
+                                <i class="bi bi-plus-circle fs-3 d-block mb-2"></i>
+                                Novo Chamado
+                            </a>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <a asp-controller="Chamados" asp-action="Index" class="btn btn-lg btn-secondary w-100">
+                                <i class="bi bi-list-ul fs-3 d-block mb-2"></i>
+                                Ver Chamados
+                            </a>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <a asp-controller="Chat" asp-action="Index" class="btn btn-lg btn-info w-100">
+                                <i class="bi bi-robot fs-3 d-block mb-2"></i>
+                                Chat IA
+                            </a>
+                        </div>
+                        @if (usuarioLogado.Perfil == PerfilEnum.Admin)
+                        {
+                            <div class="col-md-3 mb-3">
+                                <a asp-controller="Usuario" asp-action="Index" class="btn btn-lg btn-success w-100">
+                                    <i class="bi bi-people fs-3 d-block mb-2"></i>
+                                    Gerenciar Usuários
+                                </a>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .border-left-primary {
+        border-left: 0.25rem solid #4e73df !important;
+    }
+
+    .border-left-success {
+        border-left: 0.25rem solid #1cc88a !important;
+    }
+
+    .border-left-info {
+        border-left: 0.25rem solid #36b9cc !important;
+    }
+
+    .border-left-warning {
+        border-left: 0.25rem solid #f6c23e !important;
+    }
+
+    .border-left-danger {
+        border-left: 0.25rem solid #e74a3b !important;
+    }
+
+    .border-left-secondary {
+        border-left: 0.25rem solid #858796 !important;
+    }
+
+    .border-left-dark {
+        border-left: 0.25rem solid #5a5c69 !important;
+    }
+
+    .text-gray-300 {
+        color: #dddfeb !important;
+    }
+
+    .text-gray-800 {
+        color: #5a5c69 !important;
+    }
+
+    .bg-gradient-primary {
+        background: linear-gradient(180deg, #4e73df 10%, #224abe 100%);
+    }
+</style>
