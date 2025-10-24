@@ -12,12 +12,12 @@ namespace testeTicketTech.Repositorios
             _db = db;
         }
 
-        public UsuarioModel BuscarPorLoginEEmail(string login, string email)
+        public UsuarioModel? BuscarPorLoginEEmail(string login, string email)
         {
             return _db.Usuarios.FirstOrDefault(u => u.Login == login && u.Email == email);
         }
 
-        public UsuarioModel BuscarPorToken(string token)
+        public UsuarioModel? BuscarPorToken(string token)
         {
             return _db.Usuarios.FirstOrDefault(u => u.TokenRedefinicao == token);
         }

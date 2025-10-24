@@ -39,9 +39,12 @@ namespace testeTicketTech.Controllers
                 if (!ModelState.IsValid)
                     return View("Index", loginModel);
 
+                var senhaCriptografada = Criptografar(loginModel.Senha);
+
                 var usuario = _db.Usuarios.FirstOrDefault(u =>
                     u.Login == loginModel.Login &&
-                    u.Senha == loginModel.Senha);
+                    u.Senha == senhaCriptografada);
+
 
                 if (usuario == null)
                 {
@@ -127,7 +130,8 @@ namespace testeTicketTech.Controllers
             }
 
             var usuario = _usuarioRepositorio.BuscarPorToken(model.Token);
-            if (usuario == null || usuario.TokenExpiraEm < DateTime.Now)
+
+            if (usuario == null || !usuario.TokenExpiraEm.HasValue || usuario.TokenExpiraEm.Value < DateTime.Now)
             {
                 TempData["MensagemErro"] = "Token inválido ou expirado.";
                 return RedirectToAction("RedefinirSenha");
@@ -141,6 +145,7 @@ namespace testeTicketTech.Controllers
             TempData["MensagemSucesso"] = "Senha redefinida com sucesso!";
             return RedirectToAction("Index");
         }
+
 
         // 🔹 Utilitário de criptografia
         private string Criptografar(string senha)

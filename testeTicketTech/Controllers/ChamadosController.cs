@@ -16,8 +16,6 @@ namespace testeTicketTech.Controllers
     public class ChamadosController : Controller
     {
         private readonly ApplicationDbContext _db;
-        private DataSet getdados;
-
         public ChamadosController(ApplicationDbContext db)
         {
             _db = db;

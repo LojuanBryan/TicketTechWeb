@@ -8,17 +8,17 @@ namespace testeTicketTech.Models
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Preencha o nome")]
-        public string Nome { get; set; }
+        public string? Nome { get; set; }
 
         [Required(ErrorMessage = "Preencha o login")]
-        public string Login { get; set; }
+        public string? Login { get; set; }
 
         [Required(ErrorMessage = "Preencha o e-mail")]
         [EmailAddress(ErrorMessage = "E-mail inválido")]
-        public string Email { get; set; }
+        public string? Email { get; set; }
 
         [Required(ErrorMessage = "Preencha o endereço")]
-        public string Endereco { get; set; }
+        public string? Endereco { get; set; }
 
         public PerfilEnum Perfil { get; set; }
 
@@ -28,8 +28,9 @@ namespace testeTicketTech.Models
         public DateTime DataCadastro { get; set; } = DateTime.Now;
         public DateTime? DataAtualizacao { get; set; }
 
-        public string TokenRedefinicao { get; set; }
-        public DateTime? TokenExpiraEm { get; set; }
+        public string? TokenRedefinicao { get; set; } 
+        public DateTime? TokenExpiraEm { get; set; } 
+
 
     }
 }
