@@ -110,6 +110,13 @@ namespace testeTicketTech.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime?>("TokenExpiraEm")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("TokenRedefinicao")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.ToTable("Usuarios");

@@ -27,6 +27,10 @@ namespace testeTicketTech.Models
 
         public DateTime DataCadastro { get; set; } = DateTime.Now;
         public DateTime? DataAtualizacao { get; set; }
+
+        public string TokenRedefinicao { get; set; }
+        public DateTime? TokenExpiraEm { get; set; }
+
     }
 }
 

@@ -34,6 +34,11 @@
         <span class="text-danger">@Html.ValidationMessageFor(x => x.Senha)</span>
     </div>
 
+    <p class="mb-4 text-sm-end mx-auto">
+        Esqueceu a senha?
+        <a asp-action="RedefinirSenha" asp-controller="Login" class="text-primary text-gradient">Clique aqui</a>
+    </p>
+
     <div class="mb-3 form-check">
         <input asp-for="ConcordaLGPD" class="form-check-input" type="checkbox" />
         <label class="form-check-label" asp-for="ConcordaLGPD">
@@ -42,6 +47,8 @@
         </label>
         <span class="text-danger">@Html.ValidationMessageFor(x => x.ConcordaLGPD)</span>
     </div>
+
+
 
     <div class="d-grid gap-2 col-12 mx-auto">
         <button type="submit" class="btn btn-primary btn-lg">Entrar</button>
