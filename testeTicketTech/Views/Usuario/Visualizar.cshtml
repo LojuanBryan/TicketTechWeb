@@ -1,0 +1,235 @@
+﻿@model testeTicketTech.Models.UsuarioModel
+@using testeTicketTech.Enums
+
+@{
+    ViewData["Title"] = "Detalhes do Usuário";
+    var chamadosDoUsuario = ViewBag.ChamadosDoUsuario as List<testeTicketTech.Models.Chamados>;
+}
+
+<div class="container mt-4">
+    <!-- Card Principal com Informações do Usuário -->
+    <div class="card shadow mb-4">
+        <div class="card-header bg-primary text-white">
+            <h3 class="mb-0">
+                <i class="bi bi-person-badge me-2"></i>
+                Perfil do Usuário
+            </h3>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <!-- Coluna Esquerda - Dados Pessoais -->
+                <div class="col-md-6">
+                    <div class="mb-4">
+                        <h5 class="text-primary border-bottom pb-2">
+                            <i class="bi bi-person-circle me-2"></i>Dados Pessoais
+                        </h5>
+                        
+                        <div class="mb-3">
+                            <label class="fw-bold text-muted">ID:</label>
+                            <p class="fs-5">#@Model.Id</p>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="fw-bold text-muted">Nome Completo:</label>
+                            <p class="fs-5">
+                                <i class="bi bi-person me-2"></i>
+                                @Model.Nome
+                            </p>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="fw-bold text-muted">Login:</label>
+                            <p class="fs-5">
+                                <i class="bi bi-at me-2"></i>
+                                @Model.Login
+                            </p>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="fw-bold text-muted">E-mail:</label>
+                            <p class="fs-5">
+                                <i class="bi bi-envelope me-2"></i>
+                                <a href="mailto:@Model.Email">@Model.Email</a>
+                            </p>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="fw-bold text-muted">Endereço:</label>
+                            <p class="fs-5">
+                                <i class="bi bi-geo-alt me-2"></i>
+                                @Model.Endereco
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Coluna Direita - Informações do Sistema -->
+                <div class="col-md-6">
+                    <div class="mb-4">
+                        <h5 class="text-primary border-bottom pb-2">
+                            <i class="bi bi-gear me-2"></i>Informações do Sistema
+                        </h5>
+
+                        <div class="mb-3">
+                            <label class="fw-bold text-muted">Perfil de Acesso:</label>
+                            <p class="fs-5">
+                                @if (Model.Perfil == PerfilEnum.Admin)
+                                {
+                                    <span class="badge bg-danger fs-6">
+                                        <i class="bi bi-shield-check me-1"></i>Administrador
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-info fs-6">
+                                        <i class="bi bi-person me-1"></i>Usuário Padrão
+                                    </span>
+                                }
+                            </p>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="fw-bold text-muted">Data de Cadastro:</label>
+                            <p class="fs-5">
+                                <i class="bi bi-calendar-plus me-2"></i>
+                                @Model.DataCadastro.ToString("dd/MM/yyyy HH:mm")
+                            </p>
+                        </div>
+
+                        @if (Model.DataAtualizacao.HasValue)
+                        {
+                            <div class="mb-3">
+                                <label class="fw-bold text-muted">Última Atualização:</label>
+                                <p class="fs-5">
+                                    <i class="bi bi-clock-history me-2"></i>
+                                    @Model.DataAtualizacao.Value.ToString("dd/MM/yyyy HH:mm")
+                                </p>
+                            </div>
+                        }
+                    </div>
+
+                    <!-- Estatísticas de Chamados -->
+                    <div class="mb-4">
+                        <h5 class="text-primary border-bottom pb-2">
+                            <i class="bi bi-graph-up me-2"></i>Estatísticas
+                        </h5>
+
+                        <div class="row text-center">
+                            <div class="col-4">
+                                <div class="card bg-light">
+                                    <div class="card-body p-2">
+                                        <h4 class="text-primary mb-0">@ViewBag.TotalChamados</h4>
+                                        <small class="text-muted">Total</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="card bg-light">
+                                    <div class="card-body p-2">
+                                        <h4 class="text-warning mb-0">@ViewBag.ChamadosAbertos</h4>
+                                        <small class="text-muted">Abertos</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="card bg-light">
+                                    <div class="card-body p-2">
+                                        <h4 class="text-success mb-0">@ViewBag.ChamadosResolvidos</h4>
+                                        <small class="text-muted">Resolvidos</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer com Botões de Ação -->
+        <div class="card-footer bg-light">
+            <div class="d-flex gap-2">
+                <a asp-action="Editar" asp-route-id="@Model.Id" class="btn btn-primary">
+                    <i class="bi bi-pencil me-1"></i>Editar Usuário
+                </a>
+                <a asp-action="Index" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left me-1"></i>Voltar para Lista
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Card com Histórico de Chamados -->
+    @if (chamadosDoUsuario != null && chamadosDoUsuario.Any())
+    {
+        <div class="card shadow">
+            <div class="card-header bg-secondary text-white">
+                <h5 class="mb-0">
+                    <i class="bi bi-list-ul me-2"></i>
+                    Chamados do Usuário (@chamadosDoUsuario.Count)
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Título</th>
+                                <th>Status</th>
+                                <th>Dispositivo</th>
+                                <th>Data</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var chamado in chamadosDoUsuario)
+                            {
+                                <tr>
+                                    <td>#@chamado.ChamadoId</td>
+                                    <td>@chamado.Titulo</td>
+                                    <td>
+                                        @if (chamado.Status == "Aberto")
+                                        {
+                                            <span class="badge bg-warning text-dark">@chamado.Status</span>
+                                        }
+                                        else if (chamado.Status == "Resolvido")
+                                        {
+                                            <span class="badge bg-success">@chamado.Status</span>
+                                        }
+                                        else if (chamado.Status == "Em Andamento")
+                                        {
+                                            <span class="badge bg-info">@chamado.Status</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-secondary">@chamado.Status</span>
+                                        }
+                                    </td>
+                                    <td>@chamado.Dispositivo</td>
+                                    <td>@chamado.DataUltimaAtualizacao.ToString("dd/MM/yyyy")</td>
+                                    <td>
+                                        <a asp-controller="Chamados" 
+                                           asp-action="Visualizar" 
+                                           asp-route-id="@chamado.ChamadoId" 
+                                           class="btn btn-sm btn-info">
+                                            <i class="bi bi-eye"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="card shadow">
+            <div class="card-body text-center py-5">
+                <i class="bi bi-inbox fs-1 text-muted"></i>
+                <p class="text-muted mt-3">Este usuário ainda não possui chamados cadastrados.</p>
+            </div>
+        </div>
+    }
+</div>
