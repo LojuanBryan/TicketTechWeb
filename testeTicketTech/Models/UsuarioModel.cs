@@ -23,7 +23,7 @@ namespace testeTicketTech.Models
         public PerfilEnum Perfil { get; set; }
 
         [Required(ErrorMessage = "Preencha a senha")]
-        public string Senha { get; set; }
+        public string? Senha { get; set; }
 
         public DateTime DataCadastro { get; set; } = DateTime.Now;
         public DateTime? DataAtualizacao { get; set; }
@@ -31,6 +31,7 @@ namespace testeTicketTech.Models
         public string? TokenRedefinicao { get; set; } 
         public DateTime? TokenExpiraEm { get; set; } 
 
+        public virtual List<Chamados>? Chamados { get; set; }
 
     }
 }

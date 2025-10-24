@@ -27,6 +27,11 @@ namespace testeTicketTech.Repositorios
             _db.Usuarios.Update(usuario);
             _db.SaveChanges();
         }
+
+        public List<UsuarioModel> BuscarTodos()
+        {
+            return _db.Usuarios.ToList();
+        }
     }
 }
 

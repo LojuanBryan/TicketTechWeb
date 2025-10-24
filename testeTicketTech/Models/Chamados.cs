@@ -7,7 +7,9 @@ namespace testeTicketTech.Models
         [Key]
         public int ChamadoId { get; set; }
 
-        public int UsuarioId { get; set; }
+        public int? UsuarioId { get; set; }
+
+        public UsuarioModel? Usuario { get; set; }
 
         [Required(ErrorMessage = "Preencha o campo Título")]
         [MaxLength(200)]
@@ -37,5 +39,6 @@ namespace testeTicketTech.Models
 
         [Required(ErrorMessage = "Preencha a Data do ocorrido")]
         public DateTime DataUltimaAtualizacao { get; set; } = DateTime.Now;
+
     }
 }

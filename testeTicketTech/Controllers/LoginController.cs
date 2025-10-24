@@ -6,6 +6,7 @@ using testeTicketTech.Helper;
 using testeTicketTech.Models;
 using testeTicketTech.Repositorios;
 
+
 namespace testeTicketTech.Controllers
 {
     public class LoginController : Controller
@@ -92,11 +93,6 @@ namespace testeTicketTech.Controllers
             }
 
             var usuario = _usuarioRepositorio.BuscarPorLoginEEmail(model.Login, model.Email);
-            if (usuario == null)
-            {
-                TempData["MensagemErro"] = "Login ou e-mail não encontrados.";
-                return View(model);
-            }
 
             var token = Guid.NewGuid().ToString();
             usuario.TokenRedefinicao = token;
@@ -148,8 +144,10 @@ namespace testeTicketTech.Controllers
 
 
         // 🔹 Utilitário de criptografia
-        private string Criptografar(string senha)
+        private string Criptografar(string? senha)
         {
+            if (string.IsNullOrEmpty(senha)) return string.Empty;
+
             using (var sha256 = SHA256.Create())
             {
                 var bytes = Encoding.UTF8.GetBytes(senha);

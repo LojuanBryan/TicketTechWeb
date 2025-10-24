@@ -24,6 +24,9 @@ namespace testeTicketTech
             builder.Services.AddScoped<IUsuarioRepositorio, UsuarioRepositorio>();
             builder.Services.AddScoped<IEmailServico, EmailServico>();
 
+            builder.Services.AddScoped<IChamadoRepositorio, ChamadoRepositorio>();
+
+
 
 
             // Necessário para usar Session
