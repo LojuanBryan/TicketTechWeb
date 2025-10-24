@@ -79,7 +79,46 @@ namespace testeTicketTech.Controllers
 
             return datatable;
         }
+        // Exibe a página para alterar o status (apenas Admin)
+        [HttpGet]
+        [PaginaRestritaSomenteAdmin]
+        public IActionResult AlterarStatus(int? id)
+        {
+            if (id == null || id == 0)
+                return NotFound();
 
+            var chamado = _db.Chamados.FirstOrDefault(x => x.ChamadoId == id);
+
+            if (chamado == null)
+                return NotFound();
+
+            return View(chamado);
+        }
+
+        // Processa a alteração do status (apenas Admin)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [PaginaRestritaSomenteAdmin]
+        public IActionResult AlterarStatus(int id, string novoStatus)
+        {
+            var chamado = _db.Chamados.FirstOrDefault(c => c.ChamadoId == id);
+
+            if (chamado == null)
+            {
+                TempData["MensagemErro"] = "Chamado não encontrado.";
+                return RedirectToAction(nameof(Index));
+            }
+
+            // Atualizar o status
+            chamado.Status = novoStatus;
+            chamado.DataUltimaAtualizacao = DateTime.Now;
+
+            _db.SaveChanges();
+
+            TempData["MensagemSucesso"] = $"Status alterado para '{novoStatus}' com sucesso!";
+
+            return RedirectToAction(nameof(Index));
+        }
 
         // Exibe os detalhes completos do chamado
         [HttpGet]
