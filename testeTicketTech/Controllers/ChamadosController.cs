@@ -6,20 +6,26 @@ using testeTicketTech.Data;
 using testeTicketTech.Helper;
 using testeTicketTech.Models;
 using testeTicketTech.Repositorios;
+using testeTicketTech.Filters;
+
 
 namespace testeTicketTech.Controllers
 {
+
     public class ChamadosController : Controller
     {
         private readonly IChamadoRepositorio _chamadoRepositorio;
         private readonly ISessao _sessao;
+        private readonly ApplicationDbContext _db;
 
 
-        public ChamadosController(IChamadoRepositorio chamadoRepositorio, ISessao sessao)
+        public ChamadosController(IChamadoRepositorio chamadoRepositorio, ISessao sessao, ApplicationDbContext db)
         {
             _chamadoRepositorio = chamadoRepositorio;
             _sessao = sessao;
+            _db = db;
         }
+
 
         // 🔹 Lista chamados com base no perfil
         public IActionResult Index()
