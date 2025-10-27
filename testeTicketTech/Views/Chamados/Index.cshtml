@@ -75,6 +75,18 @@
                             {
                                 <span class="badge bg-info">@chamado.Status</span>
                             }
+                            else if (chamado.Status == "Aguardando Usuário")
+                            {
+                                <span class="badge bg-warning">@chamado.Status</span>
+                            }
+                            else if (chamado.Status == "Fechado")
+                            {
+                                <span class="badge bg-secondary">@chamado.Status</span>
+                            }
+                            else if (chamado.Status == "Cancelado")
+                            {
+                                <span class="badge bg-danger">@chamado.Status</span>
+                            }
                             else
                             {
                                 <span class="badge bg-secondary">@chamado.Status</span>
@@ -89,20 +101,37 @@
                             <a asp-controller="Chamados"
                                asp-action="Visualizar"
                                asp-route-id="@chamado.ChamadoId"
-                               class="btn btn-info btn-sm mx-1">
-                                <i class="bi bi-eye"></i> Ver
+                               class="btn btn-info btn-sm mx-1"
+                               title="Visualizar detalhes">
+                                <i class="bi bi-eye"></i>
                             </a>
+
+                            @* Botão Alterar Status - APENAS ADMIN *@
+                            @if (usuarioLogado != null && usuarioLogado.Perfil == PerfilEnum.Admin)
+                            {
+                                <a asp-controller="Chamados"
+                                   asp-action="AlterarStatus"
+                                   asp-route-id="@chamado.ChamadoId"
+                                   class="btn btn-warning btn-sm mx-1"
+                                   title="Alterar status">
+                                    <i class="bi bi-arrow-repeat"></i>
+                                </a>
+                            }
+
                             <a asp-controller="Chamados"
                                asp-action="Editar"
                                asp-route-id="@chamado.ChamadoId"
-                               class="btn btn-primary btn-sm mx-1">
-                                Editar
+                               class="btn btn-primary btn-sm mx-1"
+                               title="Editar chamado">
+                                <i class="bi bi-pencil"></i>
                             </a>
+
                             <a asp-controller="Chamados"
                                asp-action="Excluir"
                                asp-route-id="@chamado.ChamadoId"
-                               class="btn btn-danger btn-sm mx-1">
-                                Excluir
+                               class="btn btn-danger btn-sm mx-1"
+                               title="Excluir chamado">
+                                <i class="bi bi-trash"></i>
                             </a>
                         </td>
                     </tr>

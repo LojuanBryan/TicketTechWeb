@@ -113,7 +113,33 @@ namespace testeTicketTech.Controllers
             }
             return View(usuario);
         }
+        // Exibe os detalhes completos do usuário
+        [HttpGet]
+        public IActionResult Visualizar(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                TempData["MensagemErro"] = "ID inválido.";
+                return RedirectToAction("Index");
+            }
 
+            var usuario = _db.Usuarios.FirstOrDefault(u => u.Id == id);
+
+            if (usuario == null)
+            {
+                TempData["MensagemErro"] = "Usuário não encontrado.";
+                return RedirectToAction("Index");
+            }
+
+            // Buscar chamados do usuário
+            var chamadosDoUsuario = _db.Chamados.Where(c => c.UsuarioId == id).ToList();
+            ViewBag.ChamadosDoUsuario = chamadosDoUsuario;
+            ViewBag.TotalChamados = chamadosDoUsuario.Count;
+            ViewBag.ChamadosAbertos = chamadosDoUsuario.Count(c => c.Status == "Aberto");
+            ViewBag.ChamadosResolvidos = chamadosDoUsuario.Count(c => c.Status == "Resolvido");
+
+            return View(usuario);
+        }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult ConfirmarExclusao(int id)
