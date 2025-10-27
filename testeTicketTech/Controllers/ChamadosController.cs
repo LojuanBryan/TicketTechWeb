@@ -145,8 +145,21 @@ namespace testeTicketTech.Controllers
         {
             if (ModelState.IsValid)
             {
-                chamado.DataUltimaAtualizacao = DateTime.Now;
-                _chamadoRepositorio.Atualizar(chamado);
+                var chamadoOriginal = _chamadoRepositorio.BuscarPorId(chamado.ChamadoId);
+                if (chamadoOriginal == null)
+                {
+                    TempData["MensagemErro"] = "Chamado não encontrado.";
+                    return RedirectToAction(nameof(Index));
+                }
+
+                // Atualiza apenas os campos editáveis
+                chamadoOriginal.Titulo = chamado.Titulo;
+                chamadoOriginal.Dispositivo = chamado.Dispositivo;
+                chamadoOriginal.DescricaoDetalhada = chamado.DescricaoDetalhada;
+                chamadoOriginal.Status = chamado.Status;
+                chamadoOriginal.DataUltimaAtualizacao = DateTime.Now;
+
+                _chamadoRepositorio.Atualizar(chamadoOriginal);
 
                 TempData["MensagemSucesso"] = "Edição realizada com sucesso!";
                 return RedirectToAction(nameof(Index));
@@ -155,6 +168,8 @@ namespace testeTicketTech.Controllers
             TempData["MensagemErro"] = "Ocorreu um erro ao realizar a edição";
             return View(chamado);
         }
+
+
 
         [HttpGet]
         public IActionResult Excluir(int? id)

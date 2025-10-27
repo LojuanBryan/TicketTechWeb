@@ -87,7 +87,6 @@ namespace testeTicketTech.Controllers
                 usuarioDb.Email = usuario.Email;
                 usuarioDb.Endereco = usuario.Endereco;
                 usuarioDb.Perfil = usuario.Perfil;
-                usuarioDb.Senha = usuario.Senha;
                 usuarioDb.DataAtualizacao = DateTime.Now;
 
                 _db.Usuarios.Update(usuarioDb);

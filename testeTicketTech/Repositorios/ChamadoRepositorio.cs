@@ -38,9 +38,10 @@ namespace testeTicketTech.Repositorios
 
         public void Atualizar(Chamados chamado)
         {
-            _db.Chamados.Update(chamado);
+            _db.Chamados.Update(chamado); 
             _db.SaveChanges();
         }
+
 
         public void Remover(int id)
         {
