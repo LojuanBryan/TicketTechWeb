@@ -36,11 +36,26 @@ namespace testeTicketTech.Controllers
             var meusChamados = _db.Chamados.Count(c => c.UsuarioId == usuarioLogado.Id);
             var meusChamadosAbertos = _db.Chamados.Count(c => c.UsuarioId == usuarioLogado.Id && c.Status == "Aberto");
 
-            // Últimos 5 chamados
-            var ultimosChamados = _db.Chamados
-                .OrderByDescending(c => c.DataUltimaAtualizacao)
-                .Take(5)
-                .ToList();
+            List<Chamados> ultimosChamados;
+
+            if (usuarioLogado.Perfil == Enums.PerfilEnum.Admin)
+            {
+                // Admin vê todos os chamados
+                ultimosChamados = _db.Chamados
+                    .OrderByDescending(c => c.DataUltimaAtualizacao)
+                    .Take(5)
+                    .ToList();
+            }
+            else
+            {
+                // Usuário padrão vê apenas os seus
+                ultimosChamados = _db.Chamados
+                    .Where(c => c.UsuarioId == usuarioLogado.Id)
+                    .OrderByDescending(c => c.DataUltimaAtualizacao)
+                    .Take(5)
+                    .ToList();
+            }
+
 
             // Total de usuários (apenas para admin)
             var totalUsuarios = _db.Usuarios.Count();
