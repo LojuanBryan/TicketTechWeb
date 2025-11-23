@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Newtonsoft.Json;
 using testeTicketTech.Enums;
 using testeTicketTech.Models;
+using testeTicketTech.Filters;
+
+
 
 namespace testeTicketTech.Filters
 {

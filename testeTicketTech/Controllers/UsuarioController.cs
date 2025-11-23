@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Text;
 using testeTicketTech.Data;
 using testeTicketTech.Filters;
 using testeTicketTech.Models;
+using System.Security.Cryptography;
+
 
 namespace testeTicketTech.Controllers
 {
@@ -22,6 +25,16 @@ namespace testeTicketTech.Controllers
             return View(usuarios);
         }
 
+        private string Criptografar(string senha)
+        {
+            using (var sha256 = SHA256.Create())
+            {
+                var bytes = Encoding.UTF8.GetBytes(senha);
+                var hash = sha256.ComputeHash(bytes);
+                return BitConverter.ToString(hash).Replace("-", "").ToLower();
+            }
+        }
+
         [HttpGet]
         public IActionResult Create()
         {
@@ -34,12 +47,14 @@ namespace testeTicketTech.Controllers
         {
             if (ModelState.IsValid)
             {
+                usuario.Senha = Criptografar(usuario.Senha); // ✅ Criptografa antes de salvar
                 _db.Usuarios.Add(usuario);
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(usuario);
         }
+
 
 
         [HttpGet]
@@ -72,7 +87,6 @@ namespace testeTicketTech.Controllers
                 usuarioDb.Email = usuario.Email;
                 usuarioDb.Endereco = usuario.Endereco;
                 usuarioDb.Perfil = usuario.Perfil;
-                usuarioDb.Senha = usuario.Senha;
                 usuarioDb.DataAtualizacao = DateTime.Now;
 
                 _db.Usuarios.Update(usuarioDb);
