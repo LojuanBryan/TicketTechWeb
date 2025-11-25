@@ -356,3 +356,21 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination .page-item .page-li
     color: #212529 !important; /* texto escuro padrão Bootstrap */
 }
 
+/* Mensagens do bot em azul escuro */
+.bot-message .message-content p {
+    color: #0d2a52 !important;
+}
+.user-message .message-content p,
+.user-message .message-time {
+    color: #212529 !important;
+}
+.chat-input-container .form-control {
+    color: #212529 !important; /* texto escuro */
+    background-color: #ffffff !important; /* fundo branco */
+    border: 1px solid #ced4da !important; /* borda padrão Bootstrap */
+}
+
+    /* Placeholder também escuro */
+    .chat-input-container .form-control::placeholder {
+        color: #6c757d !important; /* cinza padrão Bootstrap */
+    }

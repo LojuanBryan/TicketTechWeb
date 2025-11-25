@@ -1,15 +1,6 @@
 ﻿@model testeTicketTech.Models.UsuarioModel?
 
-<a class="navbar-brand text-light" asp-controller="Home" asp-action="Index">
-    @if (Model != null)
-    {
-        <text>Olá, @Model.Nome</text>
-    }
-    else
-    {
-        <text>TicketTech</text>
-    }
-</a>
+
 
 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -69,3 +60,14 @@
         }
     </ul>
 </div>
+
+<a class="navbar-brand text-light" asp-controller="Home" asp-action="Index">
+    @if (Model != null)
+    {
+        <text>Olá, @Model.Nome</text>
+    }
+    else
+    {
+        <text>TicketTech</text>
+    }
+</a>
