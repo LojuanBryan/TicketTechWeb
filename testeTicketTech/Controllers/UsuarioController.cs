@@ -89,6 +89,12 @@ namespace testeTicketTech.Controllers
                 usuarioDb.Perfil = usuario.Perfil;
                 usuarioDb.DataAtualizacao = DateTime.Now;
 
+                // 🔹 Se o campo senha foi preenchido, criptografa antes de salvar
+                if (!string.IsNullOrEmpty(usuario.Senha))
+                {
+                    usuarioDb.Senha = Criptografar(usuario.Senha);
+                }
+
                 _db.Usuarios.Update(usuarioDb);
                 _db.SaveChanges();
 
@@ -98,6 +104,7 @@ namespace testeTicketTech.Controllers
 
             return View(usuario);
         }
+
 
 
 
