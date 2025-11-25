@@ -40,7 +40,9 @@
         </div>
     }
 
-    <table id="minhaTabela" class="table table-hover">
+    <table id="minhaTabela" class="table tabela-chamados">
+
+
         <thead>
             <tr>
                 <th>Id</th>
@@ -101,7 +103,7 @@
                             <a asp-controller="Chamados"
                                asp-action="Visualizar"
                                asp-route-id="@chamado.ChamadoId"
-                               class="btn btn-info btn-sm mx-1"
+                               class="btn btn-info btn-sm btn-acoes"
                                title="Visualizar detalhes">
                                 <i class="bi bi-eye"></i>
                             </a>
@@ -112,7 +114,7 @@
                                 <a asp-controller="Chamados"
                                    asp-action="AlterarStatus"
                                    asp-route-id="@chamado.ChamadoId"
-                                   class="btn btn-warning btn-sm mx-1"
+                                   class="btn btn-warning btn-sm btn-acoes"
                                    title="Alterar status">
                                     <i class="bi bi-arrow-repeat"></i>
                                 </a>
@@ -121,7 +123,7 @@
                             <a asp-controller="Chamados"
                                asp-action="Editar"
                                asp-route-id="@chamado.ChamadoId"
-                               class="btn btn-primary btn-sm mx-1"
+                               class="btn btn-primary btn-sm btn-acoes"
                                title="Editar chamado">
                                 <i class="bi bi-pencil"></i>
                             </a>
@@ -129,7 +131,7 @@
                             <a asp-controller="Chamados"
                                asp-action="Excluir"
                                asp-route-id="@chamado.ChamadoId"
-                               class="btn btn-danger btn-sm mx-1"
+                               class="btn btn-danger btn-sm btn-acoes"
                                title="Excluir chamado">
                                 <i class="bi bi-trash"></i>
                             </a>

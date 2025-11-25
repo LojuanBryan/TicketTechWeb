@@ -44,6 +44,7 @@
     <Content Remove="Views\Usuario\CriarCadastro.cshtml" />
     <Content Remove="Views\Usuario\Index - Cópia %282%29.cshtml" />
     <Content Remove="Views\Usuario\Index - Cópia.cshtml" />
+    <Content Remove="wwwroot\css\dark-theme.css" />
   </ItemGroup>
 
   <ItemGroup>

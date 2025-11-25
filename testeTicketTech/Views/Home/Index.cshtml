@@ -37,7 +37,7 @@
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                            <div class="text-xs font-weight-bold text-white text-uppercase mb-1">
                                 Total de Chamados
                             </div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">@ViewBag.TotalChamados</div>
@@ -178,18 +178,19 @@
         <div class="col-12">
             <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex justify-content-between align-items-center">
-                    <h6 class="m-0 font-weight-bold text-primary">
+                    <h6 class="m-0 font-weight-bold text-white">
                         <i class="bi bi-clock-history me-2"></i>Últimos Chamados
                     </h6>
                     <a asp-controller="Chamados" asp-action="Index" class="btn btn-sm btn-primary">
                         Ver Todos
                     </a>
                 </div>
-                <div class="card-body">
+                <div class="card-body table-striped">
                     @if (ultimosChamados != null && ultimosChamados.Any())
                     {
                         <div class="table-responsive">
-                            <table class="table table-hover">
+                            <table class="table table-hover tabela-chamados">
+
                                 <thead>
                                     <tr>
                                         <th>ID</th>
@@ -255,7 +256,7 @@
         <div class="col-12">
             <div class="card shadow">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">
+                    <h6 class="m-0 font-weight-bold text-white">
                         <i class="bi bi-lightning-charge me-2"></i>Ações Rápidas
                     </h6>
                 </div>
@@ -321,15 +322,15 @@
     }
 
     .border-left-dark {
-        border-left: 0.25rem solid #5a5c69 !important;
+        border-left: 0.25rem solid #ffffff !important;
     }
 
     .text-gray-300 {
-        color: #dddfeb !important;
+        color: #ffffff !important;
     }
 
     .text-gray-800 {
-        color: #5a5c69 !important;
+        color: #ffffff !important;
     }
 
     .bg-gradient-primary {

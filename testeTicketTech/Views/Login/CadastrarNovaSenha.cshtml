@@ -1,24 +1,37 @@
 ﻿@model testeTicketTech.Models.NovaSenhaModel
+
 @{
     Layout = "_LayoutDeslogado";
     ViewData["Title"] = "Cadastrar Nova Senha";
+    ViewData["FullWidth"] = true; // ativa fundo escuro
 }
 
-<h2 class="text-center mb-4">Cadastrar Nova Senha</h2>
+<link rel="stylesheet" href="~/css/login.css" />
 
-<form asp-controller="Login" asp-action="CadastrarNovaSenha" method="post">
-    <input type="hidden" asp-for="Token" />
+<main class="login-page">
+    <div class="login-container">
+        <div class="brand">
+            <div class="brand-icon">TT</div>
+            <h1 class="brand-title">TICKET TECH</h1>
+        </div>
 
-    <div class="mb-3">
-        <input type="password" asp-for="NovaSenha" class="form-control" placeholder="Nova Senha" />
-        <span class="text-danger">@Html.ValidationMessageFor(x => x.NovaSenha)</span>
+        <h2 class="text-center mb-4 text-white">Cadastrar Nova Senha</h2>
+
+        <form asp-controller="Login" asp-action="CadastrarNovaSenha" method="post" class="login-form">
+            <input type="hidden" asp-for="Token" />
+
+            <div class="mb-3">
+                <input type="password" asp-for="NovaSenha" class="form-control form-control-lg input-dark" placeholder="Nova Senha" />
+                <span class="text-danger">@Html.ValidationMessageFor(x => x.NovaSenha)</span>
+            </div>
+
+            <div class="d-grid gap-2 col-12 mx-auto">
+                <button type="submit" class="btn btn-primary btn-lg">Salvar Nova Senha</button>
+                <a asp-controller="Login" asp-action="Index" class="btn btn-secondary btn-lg">Voltar</a>
+            </div>
+        </form>
     </div>
-
-    <div class="d-grid gap-2 col-12 mx-auto">
-        <button type="submit" class="btn btn-primary btn-lg">Salvar Nova Senha</button>
-        <a asp-controller="Login" asp-action="Index" class="btn btn-secondary btn-lg">Voltar</a>
-    </div>
-</form>
+</main>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

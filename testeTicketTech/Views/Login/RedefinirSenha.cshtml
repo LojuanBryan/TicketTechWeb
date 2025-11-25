@@ -3,42 +3,53 @@
 @{
     Layout = "_LayoutDeslogado";
     ViewData["Title"] = "Redefinir Senha";
+    ViewData["FullWidth"] = true; // 🔽 ativa o fundo escuro
 }
 
-@if (TempData["MensagemSucesso"] != null)
-{
-    <div class="alert alert-success text-light" role="alert">
-        @TempData["MensagemSucesso"]
-    </div>
-}
+<link rel="stylesheet" href="~/css/login.css" />
 
-<h1 class="text-center display-4 mb-4">Ticket Tech</h1>
-
-<p>Para Redefinir sua senha, informe:</p>
-
-<form asp-controller="Login" asp-action="RedefinirSenha" method="post">
-    @if (TempData["MensagemErro"] != null)
-    {
-        <div class="alert alert-danger text-light" role="alert">
-            @TempData["MensagemErro"]
+<main class="login-page">
+    <div class="login-container">
+        <div class="brand">
+            <div class="brand-icon">TT</div>
+            <h1 class="brand-title">TICKET TECH</h1>
         </div>
-    }
 
-    <div class="mb-3">
-        <input type="text" asp-for="Login" class="form-control" placeholder="Login">
-        <span class="text-danger">@Html.ValidationMessageFor(x => x.Login)</span>
-    </div>
+        <h3 class="text-center mb-4 text-white">Redefinir Senha</h3>
+        <p class="text-center mb-4 text-white">Para redefinir sua senha, informe:</p>
 
-    <div class="mb-3">
-        <input type="email" asp-for="Email" class="form-control" placeholder="E-mail">
-        <span class="text-danger">@Html.ValidationMessageFor(x => x.Email)</span>
-    </div>
+        @if (TempData["MensagemSucesso"] != null)
+        {
+            <div class="alert alert-success text-light" role="alert">
+                @TempData["MensagemSucesso"]
+            </div>
+        }
 
-    <div class="d-grid gap-2 col-12 mx-auto">
-        <button type="submit" class="btn btn-primary btn-lg">Redefinir Senha</button>
-        <a asp-controller="Login" asp-action="Index" class="btn btn-secondary btn-lg">Voltar</a>
+        @if (TempData["MensagemErro"] != null)
+        {
+            <div class="alert alert-danger text-light" role="alert">
+                @TempData["MensagemErro"]
+            </div>
+        }
+
+        <form asp-controller="Login" asp-action="RedefinirSenha" method="post" class="login-form">
+            <div class="mb-3">
+                <input type="text" asp-for="Login" class="form-control form-control-lg input-dark" placeholder="Login">
+                <span class="text-danger">@Html.ValidationMessageFor(x => x.Login)</span>
+            </div>
+
+            <div class="mb-3">
+                <input type="email" asp-for="Email" class="form-control form-control-lg input-dark" placeholder="E-mail">
+                <span class="text-danger">@Html.ValidationMessageFor(x => x.Email)</span>
+            </div>
+
+            <div class="d-grid gap-2 col-12 mx-auto">
+                <button type="submit" class="btn btn-primary btn-lg">Redefinir Senha</button>
+                <a asp-controller="Login" asp-action="Index" class="btn btn-secondary btn-lg">Voltar</a>
+            </div>
+        </form>
     </div>
-</form>
+</main>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

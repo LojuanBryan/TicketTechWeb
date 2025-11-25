@@ -55,7 +55,7 @@ namespace testeTicketTech.Controllers
 
                 if (!loginModel.ConcordaLGPD)
                 {
-                    ModelState.AddModelError("ConcordaLGPD", "Você deve concordar com a LGPD para continuar.");
+                    ModelState.AddModelError("ConcordaLGPD", "Você deve concordar com os Termos para continuar.");
                     return View("Index", loginModel);
                 }
 

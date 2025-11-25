@@ -1,4 +1,4 @@
-/* ================================
+ï»¿/* ================================
    BASE DO TEMA
 ==================================*/
 html, body {
@@ -11,13 +11,6 @@ html, body {
         background: radial-gradient(ellipse at top left, #071428 0%, #071428 10%, #041428 60%, #031021 100%);
         color: #e8eef6 !important;
     }
-
-/* Padroniza todas as cores dos textos dos botões */
-.btn,
-.btn:hover,
-.btn:focus {
-    color: #ffffff !important; /* texto branco */
-}
 
 /* ================================
    NAVBAR / MENU
@@ -48,7 +41,7 @@ html, body {
 }
 
 h1, h2, h3, h4, h5, h6,
-p, strong, label,
+p, span, strong, label,
 .table, .form-label {
     color: #e8eef6 !important;
 }
@@ -57,43 +50,46 @@ p, strong, label,
    CARDS
 ==================================*/
 .card {
-    background: rgba(255,255,255,0.1);
+    background: #031021;
     border: 1px solid #0d2a52 !important;
     backdrop-filter: blur(6px);
 }
 
 /* ================================
-   TABELA ESCURA PERSONALIZADA GLOBAL
+   TABELA ESCURA PERSONALIZADA
 ==================================*/
+
+/* Corpo da tabela */
 .table {
-    background-color: #000000 !important;
-    color: #000000 !important;
+    background-color: #0e1525 !important; /* azul bem escuro */
+    color: #e8eef6 !important;
     border-collapse: collapse !important;
 }
 
+    /* CabeÃ§alho da tabela */
     .table thead th {
-        background-color: #162238 !important;
+        background-color: #162238 !important; /* um pouco mais escuro que o corpo */
         color: #ffffff !important;
         border-bottom: 1px solid rgba(255,255,255,0.18) !important;
     }
 
+    /* Bordas */
     .table td, .table th {
-        border-color: #000000 !important;
-        padding: 15px 12px;
-        line-height: 1.6;
-        vertical-align: middle;
+        border-color: rgba(255,255,255,0.08) !important;
     }
 
-.table-dark tbody tr:nth-of-type(odd) {
-    background-color: #8cbcff !important;
+/* Linhas listradas (zebradas) */
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #121b2f !important;
 }
 
-.table-dark tbody tr:nth-of-type(even) {
-    background-color: #8cbcff !important;
+.table-striped tbody tr:nth-of-type(even) {
+    background-color: #0d1729 !important;
 }
 
+/* Hover */
 .table tbody tr:hover {
-    background-color: #ffffff !important;
+    background-color: #1a2640 !important;
 }
 
 /* ================================
@@ -118,11 +114,11 @@ table.dataTable tbody tr {
     background-color: #0e1525 !important;
 }
 
-.table-striped tbody tr:nth-of-type(odd) {
-    background-color: #0b1220 !important;
+table.dataTable.stripe tbody tr.odd {
+    background-color: #121b2f !important;
 }
 
-.table-striped tbody tr:nth-of-type(even) {
+table.dataTable.stripe tbody tr.even {
     background-color: #0d1729 !important;
 }
 
@@ -145,7 +141,7 @@ table.dataTable tbody tr {
 }
 
 /* ================================
-   BOTÕES
+   BOTÃ•ES
 ==================================*/
 .btn-primary {
     background: linear-gradient(180deg,#3578ff,#1e5fe8) !important;
@@ -216,6 +212,16 @@ a, .link-create {
     }
 
 /* ================================
+   VALIDATION
+==================================*/
+.text-danger,
+.validation-summary,
+.field-validation,
+span.field-validation-error {
+    color: #ff6b6b !important;
+}
+
+/* ================================
    RESPONSIVIDADE
 ==================================*/
 @media (max-width: 576px) {
@@ -227,132 +233,3 @@ a, .link-create {
         padding: 20px;
     }
 }
-
-/* Ajuste para os botões de Ações Rápidas */
-.btn-info,
-.btn-info:hover,
-.btn-info:focus {
-    color: #ffffff !important;
-}
-
-.btn-success,
-.btn-success:hover,
-.btn-success:focus {
-    color: #ffffff !important;
-}
-
-.card .btn {
-    color: #ffffff !important;
-}
-
-/* ================================
-   AJUSTE FINAL PARA VALIDAÇÃO
-==================================*/
-form span.text-danger,
-span.field-validation-error,
-.validation-summary,
-.field-validation {
-    color: #ff0000 !important;
-}
-
-/* ================================
-   INPUT DATE
-==================================*/
-input[type="date"].form-control {
-    color: #e8eef6 !important;
-    background-color: rgba(255,255,255,0.03) !important;
-    border: 1px solid rgba(255,255,255,0.1) !important;
-}
-
-input[type="date"]::-webkit-calendar-picker-indicator {
-    filter: invert(1);
-}
-
-/* ================================
-   BOTÕES DE AÇÕES
-==================================*/
-.btn-acoes {
-    margin-right: 8px;
-}
-
-/* ================================
-   TABELA DE CHAMADOS REFORMADA
-==================================*/
-.tabela-chamados {
-    background-color: #0d1729 !important;
-    color: #e8eef6 !important;
-    border-collapse: separate;
-    border-spacing: 0 8px;
-}
-
-    .tabela-chamados thead th {
-        background-color: #162238 !important;
-        color: #ffffff !important;
-        padding: 16px 12px;
-        border-bottom: 2px solid rgba(255,255,255,0.15);
-    }
-
-    .tabela-chamados tbody td {
-        background-color: #0e1525 !important;
-        padding: 16px 12px;
-        line-height: 1.6;
-        vertical-align: middle;
-        border-top: 1px solid rgba(255,255,255,0.05);
-    }
-
-    .tabela-chamados tbody tr:nth-of-type(odd) td {
-        background-color: #0b1220 !important;
-    }
-
-    .tabela-chamados tbody tr:nth-of-type(even) td {
-        background-color: #0d1729 !important;
-    }
-
-    .tabela-chamados tbody tr:hover td {
-        background-color: #1a2338 !important;
-    }
-
-    .tabela-chamados td a.btn {
-        margin-right: 10px;
-    }
-
-/* ================================
-   PAGINAÇÃO DATATABLES FORÇADA
-==================================*/
-div.dataTables_wrapper div.dataTables_paginate ul.pagination .page-item .page-link {
-    color: #ffffff !important; /* texto branco */
-    background-color: transparent !important;
-    border: none !important;
-}
-
-div.dataTables_wrapper div.dataTables_paginate ul.pagination .page-item.active .page-link {
-    color: #ffffff !important; /* página atual em branco */
-    background-color: #1a2338 !important; /* fundo escuro */
-    border-radius: 4px;
-    border: none !important;
-}
-
-div.dataTables_wrapper div.dataTables_paginate ul.pagination .page-item .page-link:hover {
-    color: #64a3ff !important; /* azul claro no hover */
-    background-color: rgba(255,255,255,0.1) !important;
-    border-radius: 4px;
-}
-
-.form-narrow {
-    max-width: 480px; /* largura máxima */
-    margin: 0 auto; /* centraliza */
-}
-
-/* Força texto escuro dentro dos modais, mesmo com regras globais */
-.modal-content p,
-.modal-content h1,
-.modal-content h2,
-.modal-content h3,
-.modal-content h4,
-.modal-content h5,
-.modal-content h6,
-.modal-content label,
-.modal-content strong {
-    color: #212529 !important; /* texto escuro padrão Bootstrap */
-}
-
