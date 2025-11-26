@@ -12,14 +12,23 @@ namespace testeTicketTech.Repositorios
             _db = db;
         }
 
-        public UsuarioModel? BuscarPorLoginEEmail(string login, string email)
+        public UsuarioModel? BuscarPorLoginEEmail(string? login, string? email)
         {
-            return _db.Usuarios.FirstOrDefault(u => u.Login == login && u.Email == email);
+            if (string.IsNullOrWhiteSpace(login) || string.IsNullOrWhiteSpace(email))
+                return null;
+
+            var loginNorm = login.Trim();
+            var emailNorm = email.Trim();
+
+            return _db.Usuarios.FirstOrDefault(u => u.Login == loginNorm && u.Email == emailNorm);
         }
 
-        public UsuarioModel? BuscarPorToken(string token)
+        public UsuarioModel? BuscarPorToken(string? token)
         {
-            return _db.Usuarios.FirstOrDefault(u => u.TokenRedefinicao == token);
+            if (string.IsNullOrWhiteSpace(token))
+                return null;
+
+            return _db.Usuarios.FirstOrDefault(u => u.TokenRedefinicao == token.Trim());
         }
 
         public void Atualizar(UsuarioModel usuario)
@@ -34,4 +43,5 @@ namespace testeTicketTech.Repositorios
         }
     }
 }
+
 

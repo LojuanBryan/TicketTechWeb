@@ -5,11 +5,9 @@ using testeTicketTech.Filters;
 using testeTicketTech.Models;
 using System.Security.Cryptography;
 
-
 namespace testeTicketTech.Controllers
 {
     [PaginaRestritaSomenteAdmin]
-
     public class UsuarioController : Controller
     {
         private readonly ApplicationDbContext _db;
@@ -25,8 +23,12 @@ namespace testeTicketTech.Controllers
             return View(usuarios);
         }
 
-        private string Criptografar(string senha)
+        // 🔹 Criptografa a senha com SHA256
+        private string Criptografar(string? senha)
         {
+            if (string.IsNullOrEmpty(senha))
+                return string.Empty;
+
             using (var sha256 = SHA256.Create())
             {
                 var bytes = Encoding.UTF8.GetBytes(senha);
@@ -47,15 +49,22 @@ namespace testeTicketTech.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (string.IsNullOrEmpty(usuario.Senha))
+                {
+                    ModelState.AddModelError("Senha", "A senha é obrigatória.");
+                    return View(usuario);
+                }
+
                 usuario.Senha = Criptografar(usuario.Senha); // ✅ Criptografa antes de salvar
+
                 _db.Usuarios.Add(usuario);
                 _db.SaveChanges();
+
+                TempData["MensagemSucesso"] = "Usuário criado com sucesso!";
                 return RedirectToAction("Index");
             }
             return View(usuario);
         }
-
-
 
         [HttpGet]
         public IActionResult Editar(int id)
@@ -87,7 +96,6 @@ namespace testeTicketTech.Controllers
                 usuarioDb.Email = usuario.Email;
                 usuarioDb.Endereco = usuario.Endereco;
                 usuarioDb.Perfil = usuario.Perfil;
-                usuarioDb.DataAtualizacao = DateTime.Now;
 
                 // 🔹 Se o campo senha foi preenchido, criptografa antes de salvar
                 if (!string.IsNullOrEmpty(usuario.Senha))
@@ -105,9 +113,6 @@ namespace testeTicketTech.Controllers
             return View(usuario);
         }
 
-
-
-
         [HttpGet]
         public IActionResult Excluir(int id)
         {
@@ -119,6 +124,7 @@ namespace testeTicketTech.Controllers
             }
             return View(usuario);
         }
+
         // Exibe os detalhes completos do usuário
         [HttpGet]
         public IActionResult Visualizar(int? id)
@@ -146,6 +152,7 @@ namespace testeTicketTech.Controllers
 
             return View(usuario);
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult ConfirmarExclusao(int id)
@@ -163,8 +170,5 @@ namespace testeTicketTech.Controllers
             TempData["MensagemSucesso"] = "Usuário excluído com sucesso!";
             return RedirectToAction("Index");
         }
-
-
     }
-
 }

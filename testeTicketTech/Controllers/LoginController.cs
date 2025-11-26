@@ -6,7 +6,6 @@ using testeTicketTech.Helper;
 using testeTicketTech.Models;
 using testeTicketTech.Repositorios;
 
-
 namespace testeTicketTech.Controllers
 {
     public class LoginController : Controller
@@ -32,6 +31,38 @@ namespace testeTicketTech.Controllers
             return View();
         }
 
+        // 🔹 Novo método para registrar usuário
+        [HttpGet]
+        public IActionResult Registrar()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Registrar(UsuarioModel usuario)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(usuario);
+            }
+
+            if (string.IsNullOrEmpty(usuario.Senha))
+            {
+                ModelState.AddModelError("Senha", "A senha é obrigatória.");
+                return View(usuario);
+            }
+
+            // Criptografa antes de salvar
+            usuario.Senha = Criptografar(usuario.Senha);
+
+            _db.Usuarios.Add(usuario);
+            _db.SaveChanges();
+
+            TempData["MensagemSucesso"] = "Usuário registrado com sucesso! Faça login.";
+            return RedirectToAction("Index"); // volta para tela de login
+        }
+
         [HttpPost]
         public IActionResult Entrar(LoginModel loginModel)
         {
@@ -45,7 +76,6 @@ namespace testeTicketTech.Controllers
                 var usuario = _db.Usuarios.FirstOrDefault(u =>
                     u.Login == loginModel.Login &&
                     u.Senha == senhaCriptografada);
-
 
                 if (usuario == null)
                 {
@@ -93,6 +123,11 @@ namespace testeTicketTech.Controllers
             }
 
             var usuario = _usuarioRepositorio.BuscarPorLoginEEmail(model.Login, model.Email);
+            if (usuario == null)
+            {
+                TempData["MensagemErro"] = "Usuário não encontrado.";
+                return View(model);
+            }
 
             var token = Guid.NewGuid().ToString();
             usuario.TokenRedefinicao = token;
@@ -101,6 +136,12 @@ namespace testeTicketTech.Controllers
 
             var link = Url.Action("CadastrarNovaSenha", "Login", new { token = token }, Request.Scheme);
             var mensagem = $"Olá, {usuario.Nome}!<br><br>Para redefinir sua senha, clique no link abaixo:<br><a href='{link}'>Redefinir Senha</a>";
+
+            if (string.IsNullOrEmpty(usuario.Email))
+            {
+                TempData["MensagemErro"] = "Usuário não possui e-mail cadastrado.";
+                return View(model);
+            }
 
             _emailServico.Enviar(usuario.Email, "Redefinição de Senha - Ticket Tech", mensagem);
 
@@ -141,7 +182,6 @@ namespace testeTicketTech.Controllers
             TempData["MensagemSucesso"] = "Senha redefinida com sucesso!";
             return RedirectToAction("Index");
         }
-
 
         // 🔹 Utilitário de criptografia
         private string Criptografar(string? senha)

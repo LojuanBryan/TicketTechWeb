@@ -25,7 +25,8 @@
 
     <hr />
 
-    <form asp-action="Index" method="post">
+    <form asp-action="Registrar" asp-controller="Login" method="post">
+
         @Html.AntiForgeryToken()
         <div class="form-group mb-3">
             <label asp-for="Nome" class="form-label"></label>
