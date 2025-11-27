@@ -29,84 +29,87 @@
         </div>
     </div>
 
-    <!-- Cards de Estatísticas -->
-    <div class="row mb-4">
-        <!-- Card: Total de Chamados -->
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-primary shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-white text-uppercase mb-1">
-                                Total de Chamados
+    <!-- Cards de Estatísticas (somente Admin) -->
+    @if (usuarioLogado.Perfil == PerfilEnum.Admin)
+    {
+        <div class="row mb-4">
+            <!-- Card: Total de Chamados -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-primary shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-white text-uppercase mb-1">
+                                    Total de Chamados
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">@ViewBag.TotalChamados</div>
                             </div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">@ViewBag.TotalChamados</div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="bi bi-ticket-detailed fs-2 text-gray-300"></i>
+                            <div class="col-auto">
+                                <i class="bi bi-ticket-detailed fs-2 text-gray-300"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Card: Chamados Abertos -->
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-warning shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                Chamados Abertos
+            <!-- Card: Chamados Abertos -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-warning shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                    Chamados Abertos
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">@ViewBag.ChamadosAbertos</div>
                             </div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">@ViewBag.ChamadosAbertos</div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="bi bi-clock-history fs-2 text-gray-300"></i>
+                            <div class="col-auto">
+                                <i class="bi bi-clock-history fs-2 text-gray-300"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Card: Em Andamento -->
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-info shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-                                Em Andamento
+            <!-- Card: Em Andamento -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-info shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                    Em Andamento
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">@ViewBag.ChamadosEmAndamento</div>
                             </div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">@ViewBag.ChamadosEmAndamento</div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="bi bi-hourglass-split fs-2 text-gray-300"></i>
+                            <div class="col-auto">
+                                <i class="bi bi-hourglass-split fs-2 text-gray-300"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Card: Resolvidos -->
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-success shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                Resolvidos
+            <!-- Card: Resolvidos -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-success shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                    Resolvidos
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">@ViewBag.ChamadosResolvidos</div>
                             </div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">@ViewBag.ChamadosResolvidos</div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="bi bi-check-circle fs-2 text-gray-300"></i>
+                            <div class="col-auto">
+                                <i class="bi bi-check-circle fs-2 text-gray-300"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    }
 
     <!-- Segunda linha de cards (específicos do usuário) -->
     <div class="row mb-4">
@@ -172,6 +175,11 @@
             </div>
         </div>
     }
+
+    <!-- Últimos Chamados -->
+    <!-- ... resto do seu código permanece igual ... -->
+</div>
+
 
     <!-- Últimos Chamados -->
     <div class="row">
