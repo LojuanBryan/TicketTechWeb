@@ -14,14 +14,12 @@
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1 class="mb-0">Chamados</h1>
         <div class="d-flex">
-            @* Só mostra o botão Exportar se o usuário for Admin *@
             @if (usuarioLogado != null && usuarioLogado.Perfil == PerfilEnum.Admin)
             {
                 <a asp-action="Exportar" class="btn btn-success me-2">
                     <i class="bi bi-file-earmark-excel mx-1"></i> Exportar
                 </a>
             }
-
             <a asp-action="Cadastrar" class="btn btn-primary">Novo Chamado</a>
         </div>
     </div>
@@ -40,111 +38,97 @@
         </div>
     }
 
-    <table id="minhaTabela" class="table tabela-chamados">
-
-
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Título</th>
-                <th>Status</th>
-                <th>Última Atualização</th>
-                <th>Dispositivo</th>
-                <th>Sintomas</th>
-                <th>Quando</th>
-                <th>Onde</th>
-                <th>Ações</th>
-            </tr>
-        </thead>
-        <tbody>
-            @if (Model != null && Model.Any())
-            {
-                @foreach (var chamado in Model)
+    <!-- 🔹 Wrapper responsivo -->
+    <div class="table-responsive">
+        <table id="minhaTabela" class="table table-striped table-hover tabela-chamados">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Título</th>
+                    <th>Status</th>
+                    <th>Última Atualização</th>
+                    <th>Dispositivo</th>
+                    <th>Sintomas</th>
+                    <th>Quando</th>
+                    <th>Onde</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null && Model.Any())
+                {
+                    @foreach (var chamado in Model)
+                    {
+                        <tr>
+                            <td>@chamado.ChamadoId</td>
+                            <td>@chamado.Titulo</td>
+                            <td>
+                                @* badges de status iguais ao seu código *@
+                                @if (chamado.Status == "Aberto")
+                                {
+                                    <span class="badge bg-warning text-dark">@chamado.Status</span>
+                                }
+                                else if (chamado.Status == "Resolvido")
+                                {
+                                    <span class="badge bg-success">@chamado.Status</span>
+                                }
+                                else if (chamado.Status == "Em Andamento")
+                                {
+                                    <span class="badge bg-info">@chamado.Status</span>
+                                }
+                                else if (chamado.Status == "Aguardando Usuário")
+                                {
+                                    <span class="badge bg-warning">@chamado.Status</span>
+                                }
+                                else if (chamado.Status == "Fechado")
+                                {
+                                    <span class="badge bg-secondary">@chamado.Status</span>
+                                }
+                                else if (chamado.Status == "Cancelado")
+                                {
+                                    <span class="badge bg-danger">@chamado.Status</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary">@chamado.Status</span>
+                                }
+                            </td>
+                            <td>@chamado.DataUltimaAtualizacao.ToString("dd/MM/yyyy HH:mm")</td>
+                            <td>@chamado.Dispositivo</td>
+                            <td>@chamado.Sintomas</td>
+                            <td>@chamado.QuandoOcorreu.ToShortDateString()</td>
+                            <td>@chamado.OndeOcorreu</td>
+                            <td>
+                                <a asp-controller="Chamados" asp-action="Visualizar" asp-route-id="@chamado.ChamadoId"
+                                   class="btn btn-info btn-sm btn-acoes" title="Visualizar detalhes">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+                                @if (usuarioLogado != null && usuarioLogado.Perfil == PerfilEnum.Admin)
+                                {
+                                    <a asp-controller="Chamados" asp-action="AlterarStatus" asp-route-id="@chamado.ChamadoId"
+                                       class="btn btn-warning btn-sm btn-acoes" title="Alterar status">
+                                        <i class="bi bi-arrow-repeat"></i>
+                                    </a>
+                                }
+                                <a asp-controller="Chamados" asp-action="Editar" asp-route-id="@chamado.ChamadoId"
+                                   class="btn btn-primary btn-sm btn-acoes" title="Editar chamado">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                <a asp-controller="Chamados" asp-action="Excluir" asp-route-id="@chamado.ChamadoId"
+                                   class="btn btn-danger btn-sm btn-acoes" title="Excluir chamado">
+                                    <i class="bi bi-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
                 {
                     <tr>
-                        <td>@chamado.ChamadoId</td>
-                        <td>@chamado.Titulo</td>
-                        <td>
-                            @if (chamado.Status == "Aberto")
-                            {
-                                <span class="badge bg-warning text-dark">@chamado.Status</span>
-                            }
-                            else if (chamado.Status == "Resolvido")
-                            {
-                                <span class="badge bg-success">@chamado.Status</span>
-                            }
-                            else if (chamado.Status == "Em Andamento")
-                            {
-                                <span class="badge bg-info">@chamado.Status</span>
-                            }
-                            else if (chamado.Status == "Aguardando Usuário")
-                            {
-                                <span class="badge bg-warning">@chamado.Status</span>
-                            }
-                            else if (chamado.Status == "Fechado")
-                            {
-                                <span class="badge bg-secondary">@chamado.Status</span>
-                            }
-                            else if (chamado.Status == "Cancelado")
-                            {
-                                <span class="badge bg-danger">@chamado.Status</span>
-                            }
-                            else
-                            {
-                                <span class="badge bg-secondary">@chamado.Status</span>
-                            }
-                        </td>
-                        <td>@chamado.DataUltimaAtualizacao.ToString("dd/MM/yyyy HH:mm")</td>
-                        <td>@chamado.Dispositivo</td>
-                        <td>@chamado.Sintomas</td>
-                        <td>@chamado.QuandoOcorreu.ToShortDateString()</td>
-                        <td>@chamado.OndeOcorreu</td>
-                        <td>
-                            <a asp-controller="Chamados"
-                               asp-action="Visualizar"
-                               asp-route-id="@chamado.ChamadoId"
-                               class="btn btn-info btn-sm btn-acoes"
-                               title="Visualizar detalhes">
-                                <i class="bi bi-eye"></i>
-                            </a>
-
-                            @* Botão Alterar Status - APENAS ADMIN *@
-                            @if (usuarioLogado != null && usuarioLogado.Perfil == PerfilEnum.Admin)
-                            {
-                                <a asp-controller="Chamados"
-                                   asp-action="AlterarStatus"
-                                   asp-route-id="@chamado.ChamadoId"
-                                   class="btn btn-warning btn-sm btn-acoes"
-                                   title="Alterar status">
-                                    <i class="bi bi-arrow-repeat"></i>
-                                </a>
-                            }
-
-                            <a asp-controller="Chamados"
-                               asp-action="Editar"
-                               asp-route-id="@chamado.ChamadoId"
-                               class="btn btn-primary btn-sm btn-acoes"
-                               title="Editar chamado">
-                                <i class="bi bi-pencil"></i>
-                            </a>
-
-                            <a asp-controller="Chamados"
-                               asp-action="Excluir"
-                               asp-route-id="@chamado.ChamadoId"
-                               class="btn btn-danger btn-sm btn-acoes"
-                               title="Excluir chamado">
-                                <i class="bi bi-trash"></i>
-                            </a>
-                        </td>
+                        <td colspan="9" class="text-center">Nenhum chamado encontrado.</td>
                     </tr>
                 }
-            }
-            else
-            {
-                <tr>
-                    <td colspan="9" class="text-center">Nenhum chamado encontrado.</td>
-                </tr>
-            }
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
 </div>

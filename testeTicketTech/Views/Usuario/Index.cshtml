@@ -24,60 +24,63 @@
         </div>
     }
 
-    <table id="minhaTabela" class="table table-hover tabela-chamados">
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>Nome</th>
-                <th>Login</th>
-                <th>Email</th>
-                <th>Data de cadastro</th>
-                <th>Ações</th>
-            </tr>
-        </thead>
-        <tbody>
-            @if (Model != null && Model.Any())
-            {
-                @foreach (var usuario in Model)
+    <!-- 🔹 Wrapper responsivo -->
+    <div class="table-responsive">
+        <table id="minhaTabela" class="table table-hover tabela-chamados">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Nome</th>
+                    <th>Login</th>
+                    <th>Email</th>
+                    <th>Data de cadastro</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null && Model.Any())
+                {
+                    @foreach (var usuario in Model)
+                    {
+                        <tr>
+                            <td>@usuario.Id</td>
+                            <td>@usuario.Nome</td>
+                            <td>@usuario.Login</td>
+                            <td>@usuario.Email</td>
+                            <td>@usuario.DataCadastro.ToString("dd/MM/yyyy HH:mm")</td>
+                            <td>
+                                <a asp-controller="Usuario"
+                                   asp-action="Visualizar"
+                                   asp-route-id="@usuario.Id"
+                                   class="btn btn-info btn-sm mx-1"
+                                   title="Visualizar detalhes">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+                                <a asp-controller="Usuario"
+                                   asp-action="Editar"
+                                   asp-route-id="@usuario.Id"
+                                   class="btn btn-primary btn-sm mx-1"
+                                   title="Editar usuário">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                <a asp-controller="Usuario"
+                                   asp-action="Excluir"
+                                   asp-route-id="@usuario.Id"
+                                   class="btn btn-danger btn-sm mx-1"
+                                   title="Excluir usuário">
+                                    <i class="bi bi-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
                 {
                     <tr>
-                        <td>@usuario.Id</td>
-                        <td>@usuario.Nome</td>
-                        <td>@usuario.Login</td>
-                        <td>@usuario.Email</td>
-                        <td>@usuario.DataCadastro.ToString("dd/MM/yyyy HH:mm")</td>
-                        <td>
-                            <a asp-controller="Usuario"
-                               asp-action="Visualizar"
-                               asp-route-id="@usuario.Id"
-                               class="btn btn-info btn-sm mx-1"
-                               title="Visualizar detalhes">
-                                <i class="bi bi-eye"></i>
-                            </a>
-                            <a asp-controller="Usuario"
-                               asp-action="Editar"
-                               asp-route-id="@usuario.Id"
-                               class="btn btn-primary btn-sm mx-1"
-                               title="Editar usuário">
-                                <i class="bi bi-pencil"></i>
-                            </a>
-                            <a asp-controller="Usuario"
-                               asp-action="Excluir"
-                               asp-route-id="@usuario.Id"
-                               class="btn btn-danger btn-sm mx-1"
-                               title="Excluir usuário">
-                                <i class="bi bi-trash"></i>
-                            </a>
-                        </td>
+                        <td colspan="6" class="text-center">Nenhum usuário encontrado.</td>
                     </tr>
                 }
-            }
-            else
-            {
-                <tr>
-                    <td colspan="6" class="text-center">Nenhum usuário encontrado.</td>
-                </tr>
-            }
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
 </div>
