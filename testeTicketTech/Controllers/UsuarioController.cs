@@ -75,14 +75,26 @@ namespace testeTicketTech.Controllers
                 TempData["MensagemErro"] = "Usuário não encontrado.";
                 return RedirectToAction("Index");
             }
-            return View(usuario);
+
+            // Mapeia para UsuarioEditarModel
+            var model = new UsuarioEditarModel
+            {
+                Id = usuario.Id,
+                Nome = usuario.Nome,
+                Login = usuario.Login,
+                Email = usuario.Email,
+                Endereco = usuario.Endereco,
+                Perfil = usuario.Perfil
+            };
+
+            return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Editar(UsuarioModel usuario)
+        public IActionResult Editar(UsuarioEditarModel model)
         {
-            var usuarioDb = _db.Usuarios.FirstOrDefault(u => u.Id == usuario.Id);
+            var usuarioDb = _db.Usuarios.FirstOrDefault(u => u.Id == model.Id);
             if (usuarioDb == null)
             {
                 TempData["MensagemErro"] = "Usuário não encontrado.";
@@ -91,17 +103,11 @@ namespace testeTicketTech.Controllers
 
             if (ModelState.IsValid)
             {
-                usuarioDb.Nome = usuario.Nome;
-                usuarioDb.Login = usuario.Login;
-                usuarioDb.Email = usuario.Email;
-                usuarioDb.Endereco = usuario.Endereco;
-                usuarioDb.Perfil = usuario.Perfil;
-
-                // 🔹 Se o campo senha foi preenchido, criptografa antes de salvar
-                if (!string.IsNullOrEmpty(usuario.Senha))
-                {
-                    usuarioDb.Senha = Criptografar(usuario.Senha);
-                }
+                usuarioDb.Nome = model.Nome;
+                usuarioDb.Login = model.Login;
+                usuarioDb.Email = model.Email;
+                usuarioDb.Endereco = model.Endereco;
+                usuarioDb.Perfil = model.Perfil;
 
                 _db.Usuarios.Update(usuarioDb);
                 _db.SaveChanges();
@@ -110,8 +116,9 @@ namespace testeTicketTech.Controllers
                 return RedirectToAction("Index");
             }
 
-            return View(usuario);
+            return View(model);
         }
+
 
         [HttpGet]
         public IActionResult Excluir(int id)
